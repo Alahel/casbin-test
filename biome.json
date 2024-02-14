@@ -1,0 +1,58 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": true,
+		"indentStyle": "tab",
+		"indentWidth": 1,
+		"lineWidth": 120
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"style": {
+				"useBlockStatements": "off",
+				"useShorthandArrayType": "error",
+				"noShoutyConstants": "off",
+				"noNonNullAssertion": "error",
+				"noImplicitBoolean": "off",
+				"noNegationElse": "error"
+			},
+			"complexity": {
+				"useSimplifiedLogicExpression": "error"
+			},
+			"correctness": {
+				"noUndeclaredVariables": "warn",
+				"noUnusedVariables": "error"
+			},
+			"suspicious": {
+				"noConsoleLog": "error"
+			}
+		}
+	},
+	"files": {
+		"ignore": [
+			"*.yaml",
+			"tsconfig.json",
+			"package.json",
+			".turbo",
+			".Dockerfile",
+			".env*",
+			"*.md",
+			"*.gql",
+			"./.github",
+			"./husky/*",
+			"./git-hooks",
+			"./*/dist/*.js",
+			"./*/dist/*.d.ts",
+			"gha-creds*.json",
+			"./node_modules",
+			"./*/dist/*.cjs",
+			"./*/dist/*.mjs"
+		]
+	}
+}
