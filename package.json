@@ -3,7 +3,8 @@
 	"version": "1.0.0",
 	"description": "",
 	"main": "src/index.ts",
-	"scripts": {		
+	"scripts": {
+		"build": "rm -rf dist; tsc -b",
 		"code:check": "npx @biomejs/biome check --no-errors-on-unmatched .",
 		"code:lint-fix": "npx @biomejs/biome check --write --no-errors-on-unmatched .",
 		"code:lint-fix-unsafe": "npx @biomejs/biome check --write --unsafe --no-errors-on-unmatched .",

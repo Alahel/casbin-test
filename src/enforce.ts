@@ -1,21 +1,22 @@
-import type { Enforcer } from "casbin"
-import type { PolicyActionEnum, PolicyObjectEnum } from "./types"
+import { Effect, type Enforcer } from "casbin"
+import { type Enforce, PolicyEft, PolicyEftValueMapping } from "./types"
 
-export type Enforce = {
-	ef: Enforcer
-	sub: string
-	obj: PolicyObjectEnum
-	act: PolicyActionEnum
-}
+const enforce = async ({ ef, sub, dom, obj, act, eft = PolicyEft.Allow }: Enforce) => {
+	let ret = false // deny by default
 
-export const enforce = async ({ ef, sub, obj, act }: Enforce): Promise<boolean> => {
-	const ret = await ef.enforce(sub, obj, act)
-	if (ret === true) console.log(`===>${sub} allowed to ${act} ${obj}`)
-	else console.error(`===>${sub} denied to ${act} ${obj}`)
+	if (eft === PolicyEft.Allow) ret = await ef.enforce(dom, sub, obj, act)
+	else {
+		const policies = await ef.getFilteredPolicy(0, dom, sub, obj, act)
+		ret = policies.some((policy) => policy[4] === eft)
+	}
+
+	if (eft === PolicyEft.Allow) console.log(`===>${sub} ${ret ? "allowed" : "denied"} to ${act} ${obj}`)
+	else if (eft === PolicyEft.Deny) console.error(`===>${sub} ${ret ? "denied" : "allowed"} to ${act} ${obj}`)
+
 	return ret
 }
 
-export const checkPermission =
+export const policyEnforceCheck =
 	(ef: Enforcer) =>
-	async (sub: string, obj: PolicyObjectEnum, act: PolicyActionEnum): Promise<boolean> =>
-		enforce({ ef, sub, obj, act })
+	({ sub, dom, obj, act, eft }: Omit<Enforce, "ef">) =>
+		enforce({ ef, sub, dom, obj, act, eft })
