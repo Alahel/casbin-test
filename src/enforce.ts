@@ -1,10 +1,10 @@
 import type { Enforcer } from "casbin"
-import type { PolicyActionEnum, PolicyObjectEnum } from "./types"
+import type { PolicyActionEnum, PolicyRessourceEnum } from "./types"
 
 export type Enforce = {
 	ef: Enforcer
 	sub: string
-	obj: PolicyObjectEnum
+	obj: PolicyRessourceEnum
 	act: PolicyActionEnum
 }
 
@@ -17,5 +17,5 @@ export const enforce = async ({ ef, sub, obj, act }: Enforce): Promise<boolean> 
 
 export const checkPermission =
 	(ef: Enforcer) =>
-	async (sub: string, obj: PolicyObjectEnum, act: PolicyActionEnum): Promise<boolean> =>
+	async (sub: string, obj: PolicyRessourceEnum, act: PolicyActionEnum): Promise<boolean> =>
 		enforce({ ef, sub, obj, act })

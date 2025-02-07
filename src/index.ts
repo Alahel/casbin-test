@@ -3,7 +3,7 @@ import KnexAdapter from "casbin-knex-adapter"
 import Knex from "knex"
 import { checkPermission, enforce } from "./enforce"
 import { ALL_GROUPING_POLICIES, ALL_POLICIES, POLICY_USER_ALICE, POLICY_USER_BOB, POLICY_USER_JOHN } from "./policies"
-import { type Context, PolicyActionEnum, PolicyObjectEnum } from "./types"
+import { type Context, PolicyActionEnum, PolicyRessourceEnum } from "./types"
 
 /**
  * @deprecated prefer mainFromDB
@@ -63,20 +63,20 @@ const main = async () => {
 	const check = checkPermission(ef)
 
 	// alice
-	await check(POLICY_USER_ALICE, PolicyObjectEnum.MOVIE, PolicyActionEnum.READ)
-	await check(POLICY_USER_ALICE, PolicyObjectEnum.MOVIE, PolicyActionEnum.DELETE)
-	await check(POLICY_USER_ALICE, PolicyObjectEnum.MOVIE, PolicyActionEnum.CREATE)
-	await check(POLICY_USER_ALICE, PolicyObjectEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.CREATE)
-	await check(POLICY_USER_ALICE, PolicyObjectEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.UPDATE)
+	await check(POLICY_USER_ALICE, PolicyRessourceEnum.MOVIE, PolicyActionEnum.READ)
+	await check(POLICY_USER_ALICE, PolicyRessourceEnum.MOVIE, PolicyActionEnum.DELETE)
+	await check(POLICY_USER_ALICE, PolicyRessourceEnum.MOVIE, PolicyActionEnum.CREATE)
+	await check(POLICY_USER_ALICE, PolicyRessourceEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.CREATE)
+	await check(POLICY_USER_ALICE, PolicyRessourceEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.UPDATE)
 
 	// bob
-	await check(POLICY_USER_BOB, PolicyObjectEnum.MOVIE, PolicyActionEnum.READ)
-	await check(POLICY_USER_BOB, PolicyObjectEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.CREATE)
-	await check(POLICY_USER_BOB, PolicyObjectEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.CREATE)
+	await check(POLICY_USER_BOB, PolicyRessourceEnum.MOVIE, PolicyActionEnum.READ)
+	await check(POLICY_USER_BOB, PolicyRessourceEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.CREATE)
+	await check(POLICY_USER_BOB, PolicyRessourceEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.CREATE)
 
 	// john
-	await check(POLICY_USER_JOHN, PolicyObjectEnum.MOVIE, PolicyActionEnum.READ)
-	await check(POLICY_USER_JOHN, PolicyObjectEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.CREATE)
+	await check(POLICY_USER_JOHN, PolicyRessourceEnum.MOVIE, PolicyActionEnum.READ)
+	await check(POLICY_USER_JOHN, PolicyRessourceEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.CREATE)
 }
 
 main()

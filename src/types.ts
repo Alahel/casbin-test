@@ -4,7 +4,7 @@ export type Context = {
 	ef: Enforcer
 }
 
-export enum PolicyObjectEnum {
+export enum PolicyRessourceEnum {
 	MOVIE = "MOVIE",
 	MOVIE_LOCALIZED_DATA = "MOVIE_LOCALIZED_DATA",
 	MOVIE_BRANDED_DATA = "MOVIE_BRANDED_DATA",

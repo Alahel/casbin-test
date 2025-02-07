@@ -1,4 +1,4 @@
-import { PolicyActionEnum, PolicyObjectEnum } from "./types"
+import { PolicyActionEnum, PolicyRessourceEnum } from "./types"
 
 // ---shape of basic policies---
 export const PolicyCRUD = [
@@ -9,10 +9,10 @@ export const PolicyCRUD = [
 ] as const
 
 export const PolicyAvailablePermissions = {
-	[PolicyObjectEnum.MOVIE]: PolicyCRUD,
-	[PolicyObjectEnum.MOVIE_LOCALIZED_DATA]: PolicyCRUD,
-	[PolicyObjectEnum.MOVIE_BRANDED_DATA]: PolicyCRUD,
-	[PolicyObjectEnum.THEATER]: [PolicyActionEnum.READ],
+	[PolicyRessourceEnum.MOVIE]: PolicyCRUD,
+	[PolicyRessourceEnum.MOVIE_LOCALIZED_DATA]: PolicyCRUD,
+	[PolicyRessourceEnum.MOVIE_BRANDED_DATA]: PolicyCRUD,
+	[PolicyRessourceEnum.THEATER]: [PolicyActionEnum.READ],
 } as const
 
 // ---user policies---
@@ -31,23 +31,23 @@ export const POLICY_GROUP_B2B_APPDOT = "PolicyGroup:b2b_appdot"
 
 export const ALL_POLICIES = [
 	// roles
-	[POLICY_ROLE_REDAC, PolicyObjectEnum.MOVIE, PolicyActionEnum.READ],
-	[POLICY_ROLE_REDAC, PolicyObjectEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.CREATE],
-	[POLICY_ROLE_REDAC, PolicyObjectEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.READ],
-	[POLICY_ROLE_REDAC, PolicyObjectEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.UPDATE],
-	[POLICY_ROLE_REDAC, PolicyObjectEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.DELETE],
+	[POLICY_ROLE_REDAC, PolicyRessourceEnum.MOVIE, PolicyActionEnum.READ],
+	[POLICY_ROLE_REDAC, PolicyRessourceEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.CREATE],
+	[POLICY_ROLE_REDAC, PolicyRessourceEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.READ],
+	[POLICY_ROLE_REDAC, PolicyRessourceEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.UPDATE],
+	[POLICY_ROLE_REDAC, PolicyRessourceEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.DELETE],
 
-	[POLICY_ROLE_B2B_MAVENS, PolicyObjectEnum.MOVIE, PolicyActionEnum.READ],
-	[POLICY_ROLE_B2B_MAVENS, PolicyObjectEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.CREATE],
-	[POLICY_ROLE_B2B_MAVENS, PolicyObjectEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.READ],
-	[POLICY_ROLE_B2B_MAVENS, PolicyObjectEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.UPDATE],
-	[POLICY_ROLE_B2B_MAVENS, PolicyObjectEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.DELETE],
+	[POLICY_ROLE_B2B_MAVENS, PolicyRessourceEnum.MOVIE, PolicyActionEnum.READ],
+	[POLICY_ROLE_B2B_MAVENS, PolicyRessourceEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.CREATE],
+	[POLICY_ROLE_B2B_MAVENS, PolicyRessourceEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.READ],
+	[POLICY_ROLE_B2B_MAVENS, PolicyRessourceEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.UPDATE],
+	[POLICY_ROLE_B2B_MAVENS, PolicyRessourceEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.DELETE],
 
 	// user
-	[POLICY_USER_ALICE, PolicyObjectEnum.MOVIE, PolicyActionEnum.DELETE],
+	[POLICY_USER_ALICE, PolicyRessourceEnum.MOVIE, PolicyActionEnum.DELETE],
 
 	// group
-	[POLICY_GROUP_B2B_RIDGEFIELD, PolicyObjectEnum.MOVIE, PolicyActionEnum.UPDATE],
+	[POLICY_GROUP_B2B_RIDGEFIELD, PolicyRessourceEnum.MOVIE, PolicyActionEnum.UPDATE],
 ]
 
 export const ALL_GROUPING_POLICIES = [
