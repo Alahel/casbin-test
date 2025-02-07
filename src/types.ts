@@ -1,8 +1,8 @@
-import { Enforcer } from "casbin";
+import type { Enforcer } from "casbin"
 
 export type Context = {
-	ef: Enforcer;
-};
+	ef: Enforcer
+}
 
 export enum PolicyObjectEnum {
 	MOVIE = "MOVIE",
@@ -17,4 +17,3 @@ export enum PolicyActionEnum {
 	UPDATE = "UPDATE",
 	DELETE = "DELETE",
 }
-

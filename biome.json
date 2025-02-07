@@ -7,6 +7,12 @@
 		"indentWidth": 1,
 		"lineWidth": 120
 	},
+	"javascript": {
+		"formatter": {
+			"semicolons": "asNeeded",
+			"trailingCommas": "all"
+		}
+	},
 	"organizeImports": {
 		"enabled": true
 	},
@@ -30,27 +36,40 @@
 				"noUnusedVariables": "error"
 			},
 			"suspicious": {
-				"noConsoleLog": "error"
+				"noConsoleLog": "off"
 			}
 		}
 	},
 	"files": {
 		"ignore": [
 			"*.yaml",
-			"tsconfig.json",
-			"package.json",
+			"*.yml",
+			"*.env",
+			".gitignore",
+			".editorconfig",
+			"Dockerfile",
+			".nvmrc",
+			".npmrc",
+			"Makefile",
+			"*.mk",
+			"*.drawio.svg",
+			"CODEOWNERS",
 			".turbo",
 			".Dockerfile",
 			".env*",
 			"*.md",
 			"*.gql",
+			"*.ts.snap",
 			"./.github",
-			"./husky/*",
+			".npm-cache",
+			".husky",
+			".git-hooks",
 			"./git-hooks",
 			"./*/dist/*.js",
 			"./*/dist/*.d.ts",
 			"gha-creds*.json",
 			"./node_modules",
+			"package-lock.json",
 			"./*/dist/*.cjs",
 			"./*/dist/*.mjs"
 		]
