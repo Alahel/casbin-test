@@ -1,65 +1,68 @@
-import { PolicyActionEnum, PolicyRessourceEnum } from "./types"
-
-// ---shape of basic policies---
-export const PolicyCRUD = [
-	PolicyActionEnum.CREATE,
-	PolicyActionEnum.READ,
-	PolicyActionEnum.UPDATE,
-	PolicyActionEnum.DELETE,
-] as const
+import { Effect } from "casbin"
+import {
+	type GroupingPolicyTuple,
+	PolicyActionEnum,
+	PolicyCRUD,
+	PolicyRessourceEnum,
+	type PolicySubject,
+	type PolicyTuple,
+} from "./types"
 
 export const PolicyAvailablePermissions = {
-	[PolicyRessourceEnum.MOVIE]: PolicyCRUD,
-	[PolicyRessourceEnum.MOVIE_LOCALIZED_DATA]: PolicyCRUD,
-	[PolicyRessourceEnum.MOVIE_BRANDED_DATA]: PolicyCRUD,
-	[PolicyRessourceEnum.THEATER]: [PolicyActionEnum.READ],
+	[PolicyRessourceEnum.Movie]: PolicyCRUD,
+	[PolicyRessourceEnum.MovieLocalizedData]: PolicyCRUD,
+	[PolicyRessourceEnum.MovieBrandedData]: PolicyCRUD,
+	[PolicyRessourceEnum.Theater]: [PolicyActionEnum.Read],
 } as const
 
-// ---user policies---
-export const POLICY_USER_ALICE = "PolicyUser:alice"
-export const POLICY_USER_BOB = "PolicyUser:bob"
-export const POLICY_USER_JOHN = "PolicyUser:john"
+// ---users---
+export const PolicyUserAlice: PolicySubject = "PolicyUser:alice"
+export const PolicyUserBob: PolicySubject = "PolicyUser:bob"
+export const PolicyUserJohn: PolicySubject = "PolicyUser:john"
 
-// ---roles policies---
-export const POLICY_ROLE_REDAC = "PolicyRole:redac"
-export const POLICY_ROLE_B2B_MAVENS = "PolicyRole:b2b_mavens"
+// ---roles---
+export const PolicyRoleRedac = "PolicyRole:redac"
+export const PolicyRoleB2BMavens = "PolicyRole:b2b_mavens"
 
-// ---group policies---
-export const POLICY_GROUP_REDAC_FR = "PolicyGroup:redac_fr"
-export const POLICY_GROUP_B2B_RIDGEFIELD = "PolicyGroup:b2b_ridgefield"
-export const POLICY_GROUP_B2B_APPDOT = "PolicyGroup:b2b_appdot"
+// ---groups---
+export const PolicyGroupRedacFR = "PolicyGroup:redac_fr"
+export const PolicyGroupRedacTransverseFR = "PolicyGroup:redac_transverse_fr"
+export const PolicyGroupB2BRidgefield = "PolicyGroup:b2b_ridgefield"
+export const PolicyGroupB2BAppdot = "PolicyGroup:b2b_appdot"
 
-export const ALL_POLICIES = [
+export const ALL_POLICIES: PolicyTuple[] = [
 	// roles
-	[POLICY_ROLE_REDAC, PolicyRessourceEnum.MOVIE, PolicyActionEnum.READ],
-	[POLICY_ROLE_REDAC, PolicyRessourceEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.CREATE],
-	[POLICY_ROLE_REDAC, PolicyRessourceEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.READ],
-	[POLICY_ROLE_REDAC, PolicyRessourceEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.UPDATE],
-	[POLICY_ROLE_REDAC, PolicyRessourceEnum.MOVIE_BRANDED_DATA, PolicyActionEnum.DELETE],
+	[PolicyRoleRedac, PolicyRessourceEnum.Movie, PolicyActionEnum.Read, Effect.Allow],
+	[PolicyRoleRedac, PolicyRessourceEnum.MovieBrandedData, PolicyActionEnum.Create, Effect.Allow],
+	[PolicyRoleRedac, PolicyRessourceEnum.MovieBrandedData, PolicyActionEnum.Read, Effect.Allow],
+	[PolicyRoleRedac, PolicyRessourceEnum.MovieBrandedData, PolicyActionEnum.Update, Effect.Allow],
+	[PolicyRoleRedac, PolicyRessourceEnum.MovieBrandedData, PolicyActionEnum.Delete, Effect.Allow],
 
-	[POLICY_ROLE_B2B_MAVENS, PolicyRessourceEnum.MOVIE, PolicyActionEnum.READ],
-	[POLICY_ROLE_B2B_MAVENS, PolicyRessourceEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.CREATE],
-	[POLICY_ROLE_B2B_MAVENS, PolicyRessourceEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.READ],
-	[POLICY_ROLE_B2B_MAVENS, PolicyRessourceEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.UPDATE],
-	[POLICY_ROLE_B2B_MAVENS, PolicyRessourceEnum.MOVIE_LOCALIZED_DATA, PolicyActionEnum.DELETE],
+	[PolicyRoleB2BMavens, PolicyRessourceEnum.Movie, PolicyActionEnum.Read, Effect.Allow],
+	[PolicyRoleB2BMavens, PolicyRessourceEnum.MovieLocalizedData, PolicyActionEnum.Create, Effect.Allow],
+	[PolicyRoleB2BMavens, PolicyRessourceEnum.MovieLocalizedData, PolicyActionEnum.Read, Effect.Allow],
+	[PolicyRoleB2BMavens, PolicyRessourceEnum.MovieLocalizedData, PolicyActionEnum.Update, Effect.Allow],
+	[PolicyRoleB2BMavens, PolicyRessourceEnum.MovieLocalizedData, PolicyActionEnum.Delete, Effect.Allow],
 
 	// user
-	[POLICY_USER_ALICE, PolicyRessourceEnum.MOVIE, PolicyActionEnum.DELETE],
+	[PolicyUserAlice, PolicyRessourceEnum.Movie, PolicyActionEnum.Delete, Effect.Allow],
 
 	// group
-	[POLICY_GROUP_B2B_RIDGEFIELD, PolicyRessourceEnum.MOVIE, PolicyActionEnum.UPDATE],
+	[PolicyGroupB2BRidgefield, PolicyRessourceEnum.Movie, PolicyActionEnum.Update, Effect.Allow],
 ]
 
-export const ALL_GROUPING_POLICIES = [
+export const ALL_GROUPING_POLICIES: GroupingPolicyTuple[] = [
 	// roles of groups
-	[POLICY_GROUP_REDAC_FR, POLICY_ROLE_REDAC],
-	[POLICY_GROUP_B2B_RIDGEFIELD, POLICY_ROLE_B2B_MAVENS],
+	[PolicyGroupRedacFR, PolicyRoleRedac],
+	[PolicyGroupB2BRidgefield, PolicyRoleB2BMavens],
 
 	// users in groups
-	[POLICY_USER_ALICE, POLICY_GROUP_REDAC_FR],
-	[POLICY_USER_BOB, POLICY_GROUP_B2B_RIDGEFIELD],
-	[POLICY_USER_JOHN, POLICY_GROUP_B2B_APPDOT],
+	[PolicyUserAlice, PolicyGroupRedacFR],
+	[PolicyUserBob, PolicyGroupB2BRidgefield],
+	[PolicyUserJohn, PolicyGroupB2BAppdot],
 
 	// groups inheritance
-	[POLICY_GROUP_B2B_APPDOT, POLICY_GROUP_REDAC_FR],
+	[PolicyGroupB2BAppdot, PolicyGroupRedacFR],
+	[PolicyGroupRedacTransverseFR, PolicyGroupRedacFR],
+	[PolicyGroupRedacTransverseFR, PolicyGroupB2BRidgefield],
 ]
