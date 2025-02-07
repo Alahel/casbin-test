@@ -9,11 +9,13 @@ import {
 	PolicyGroupB2BRidgefield,
 	PolicyGroupRedacFR,
 	PolicyGroupRedacTransverseFR,
+	PolicyTenant1,
 	PolicyUserAlice,
 	PolicyUserBob,
 	PolicyUserJohn,
+	PolicyUserRoot,
 } from "./policies"
-import { type Context, PolicyActionEnum, PolicyRessourceEnum } from "./types"
+import { type Context, PolicyAct, PolicyObj } from "./types"
 
 /**
  * @deprecated prefer mainFromDB
@@ -46,6 +48,7 @@ const mainFromDB = async (): Promise<Context> => {
 	const adapter = await KnexAdapter.newAdapter(knex)
 
 	const ef = await newEnforcer("casbin/model.conf", adapter)
+	ef.enableLog(false)
 
 	await ef.clearPolicy()
 
@@ -65,82 +68,125 @@ const main = async () => {
 	const { ef } = await mainFromDB()
 
 	console.log("===>groups policies", await ef.getGroupingPolicy())
-	console.log(`===>roles of group ${PolicyGroupRedacFR}`, await ef.getRolesForUser(PolicyGroupRedacFR))
-	console.log(`===>roles of group ${PolicyGroupB2BAppdot}`, await ef.getRolesForUser(PolicyGroupB2BAppdot))
-	console.log(`===>roles of group ${PolicyGroupB2BRidgefield}`, await ef.getRolesForUser(PolicyGroupB2BRidgefield))
-
-	console.log("\n")
-	console.log(`===>parent groups of group ${PolicyGroupB2BAppdot}`, await ef.getRolesForUser(PolicyGroupB2BAppdot))
+	console.log(`===>all roles of group ${PolicyGroupRedacFR}`, await ef.getImplicitRolesForUser(PolicyGroupRedacFR))
+	console.log(`===>all roles of group ${PolicyGroupB2BAppdot}`, await ef.getImplicitRolesForUser(PolicyGroupB2BAppdot))
 	console.log(
-		`===>parent groups of group ${PolicyGroupRedacTransverseFR}`,
-		await ef.getRolesForUser(PolicyGroupRedacTransverseFR),
+		`===>all roles of group ${PolicyGroupB2BRidgefield}`,
+		await ef.getImplicitRolesForUser(PolicyGroupB2BRidgefield),
+	)
+	console.log(
+		`===>all roles of group ${PolicyGroupRedacTransverseFR}`,
+		await ef.getImplicitRolesForUser(PolicyGroupRedacTransverseFR),
 	)
 
 	console.log("\n")
-	console.log(`===>members of group ${PolicyGroupRedacFR}`, await ef.getUsersForRole(PolicyGroupRedacFR))
+	console.log(`===>members of group ${PolicyGroupRedacFR}`, await ef.getImplicitUsersForRole(PolicyGroupRedacFR))
 
 	console.log("\n")
-	console.log(`===>groups of user ${PolicyUserAlice}`, await ef.getRolesForUser(PolicyUserAlice))
-	console.log(`===>groups of user ${PolicyUserBob}`, await ef.getRolesForUser(PolicyUserBob))
-	console.log(`===>groups of user ${PolicyUserJohn}`, await ef.getRolesForUser(PolicyUserJohn))
+	console.log(`===>groups of user ${PolicyUserAlice}`, await ef.getImplicitRolesForUser(PolicyUserAlice))
+	console.log(`===>groups of user ${PolicyUserBob}`, await ef.getImplicitRolesForUser(PolicyUserBob))
+	console.log(`===>groups of user ${PolicyUserJohn}`, await ef.getImplicitRolesForUser(PolicyUserJohn))
 
-	console.log("\n")
 	const policyCheck = policyEnforceCheck(ef)
 
+	// root
+	// todo: make those wildcard policies work
+	console.log("\n")
+	await policyCheck({
+		sub: PolicyUserRoot,
+		dom: PolicyTenant1,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Read,
+	})
+
+	// PolicyGroupB2BRidgefield
+	await policyCheck({
+		sub: PolicyGroupB2BRidgefield,
+		dom: PolicyTenant1,
+		obj: PolicyObj.Theater,
+		act: PolicyAct.Export,
+	})
+
+	await policyCheck({
+		sub: PolicyGroupRedacTransverseFR,
+		dom: PolicyTenant1,
+		obj: PolicyObj.MovieBrandedData,
+		act: PolicyAct.Update,
+	})
+	await policyCheck({
+		sub: PolicyGroupRedacTransverseFR,
+		dom: PolicyTenant1,
+		obj: PolicyObj.Theater,
+		act: PolicyAct.Export,
+	})
+
 	// alice
+	console.log("\n")
 	await policyCheck({
 		sub: PolicyUserAlice,
-		obj: PolicyRessourceEnum.Movie,
-		act: PolicyActionEnum.Read,
+		dom: PolicyTenant1,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Read,
 	})
 	await policyCheck({
 		sub: PolicyUserAlice,
-		obj: PolicyRessourceEnum.Movie,
-		act: PolicyActionEnum.Delete,
+		dom: PolicyTenant1,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Delete,
 	})
 	await policyCheck({
 		sub: PolicyUserAlice,
-		obj: PolicyRessourceEnum.Movie,
-		act: PolicyActionEnum.Create,
+		dom: PolicyTenant1,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Create,
 	})
 	await policyCheck({
 		sub: PolicyUserAlice,
-		obj: PolicyRessourceEnum.MovieBrandedData,
-		act: PolicyActionEnum.Create,
+		dom: PolicyTenant1,
+		obj: PolicyObj.MovieBrandedData,
+		act: PolicyAct.Create,
 	})
 	await policyCheck({
 		sub: PolicyUserAlice,
-		obj: PolicyRessourceEnum.MovieLocalizedData,
-		act: PolicyActionEnum.Update,
+		dom: PolicyTenant1,
+		obj: PolicyObj.MovieLocalizedData,
+		act: PolicyAct.Update,
 	})
 
 	// bob
+	console.log("\n")
 	await policyCheck({
 		sub: PolicyUserBob,
-		obj: PolicyRessourceEnum.Movie,
-		act: PolicyActionEnum.Read,
+		dom: PolicyTenant1,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Read,
 	})
 	await policyCheck({
 		sub: PolicyUserBob,
-		obj: PolicyRessourceEnum.MovieBrandedData,
-		act: PolicyActionEnum.Create,
+		dom: PolicyTenant1,
+		obj: PolicyObj.MovieBrandedData,
+		act: PolicyAct.Create,
 	})
 	await policyCheck({
 		sub: PolicyUserBob,
-		obj: PolicyRessourceEnum.MovieLocalizedData,
-		act: PolicyActionEnum.Create,
+		dom: PolicyTenant1,
+		obj: PolicyObj.MovieLocalizedData,
+		act: PolicyAct.Create,
 	})
 
 	// john
+	console.log("\n")
 	await policyCheck({
 		sub: PolicyUserJohn,
-		obj: PolicyRessourceEnum.Movie,
-		act: PolicyActionEnum.Read,
+		dom: PolicyTenant1,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Read,
 	})
 	await policyCheck({
 		sub: PolicyUserJohn,
-		obj: PolicyRessourceEnum.MovieBrandedData,
-		act: PolicyActionEnum.Create,
+		dom: PolicyTenant1,
+		obj: PolicyObj.MovieBrandedData,
+		act: PolicyAct.Create,
 	})
 }
 

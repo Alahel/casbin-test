@@ -1,54 +1,74 @@
 import { Effect } from "casbin"
 import {
 	type GroupingPolicyTuple,
-	PolicyActionEnum,
+	PolicyAct,
 	PolicyCRUD,
-	PolicyRessourceEnum,
-	type PolicySubject,
+	type PolicyDom,
+	PolicyEft,
+	PolicyObj,
+	type PolicySub,
 	type PolicyTuple,
 } from "./types"
 
-export const PolicyAvailablePermissions = {
-	[PolicyRessourceEnum.Movie]: PolicyCRUD,
-	[PolicyRessourceEnum.MovieLocalizedData]: PolicyCRUD,
-	[PolicyRessourceEnum.MovieBrandedData]: PolicyCRUD,
-	[PolicyRessourceEnum.Theater]: [PolicyActionEnum.Read],
+// todo: use those restricted permissions per objects
+export const PolicyActPerObj = {
+	[PolicyObj.Movie]: PolicyCRUD,
+	[PolicyObj.MovieLocalizedData]: PolicyCRUD,
+	[PolicyObj.MovieBrandedData]: PolicyCRUD,
+	[PolicyObj.Theater]: [...PolicyCRUD, PolicyAct.Export],
+	[PolicyObj.ConfigurationImport]: [PolicyAct.Execute],
 } as const
 
+// ---tenants---
+export const PolicyTenant1: PolicyDom = "d:tenant1"
+export const PolicyTenant2: PolicyDom = "d:tenant2"
+
 // ---users---
-export const PolicyUserAlice: PolicySubject = "PolicyUser:alice"
-export const PolicyUserBob: PolicySubject = "PolicyUser:bob"
-export const PolicyUserJohn: PolicySubject = "PolicyUser:john"
+export const PolicyUserRoot: PolicySub = "u:root"
+export const PolicyUserAlice: PolicySub = "u:alice"
+export const PolicyUserBob: PolicySub = "u:bob"
+export const PolicyUserJohn: PolicySub = "u:john"
 
 // ---roles---
-export const PolicyRoleRedac = "PolicyRole:redac"
-export const PolicyRoleB2BMavens = "PolicyRole:b2b_mavens"
+export const PolicyRoleRedac: PolicySub = "r:redac"
+export const PolicyRoleB2BMavens: PolicySub = "r:b2b_mavens"
 
 // ---groups---
-export const PolicyGroupRedacFR = "PolicyGroup:redac_fr"
-export const PolicyGroupRedacTransverseFR = "PolicyGroup:redac_transverse_fr"
-export const PolicyGroupB2BRidgefield = "PolicyGroup:b2b_ridgefield"
-export const PolicyGroupB2BAppdot = "PolicyGroup:b2b_appdot"
+export const PolicyGroupRedacFR: PolicySub = "g:redac_fr"
+export const PolicyGroupRedacTransverseFR: PolicySub = "g:redac_transverse_fr"
+export const PolicyGroupB2BRidgefield: PolicySub = "g:b2b_ridgefield"
+export const PolicyGroupB2BAppdot: PolicySub = "g:b2b_appdot"
 
 export const ALL_POLICIES: PolicyTuple[] = [
+	[PolicyTenant1, PolicyUserRoot, "*", "*", PolicyEft.Allow],
 	// roles
-	[PolicyRoleRedac, PolicyRessourceEnum.Movie, PolicyActionEnum.Read, Effect.Allow],
-	[PolicyRoleRedac, PolicyRessourceEnum.MovieBrandedData, PolicyActionEnum.Create, Effect.Allow],
-	[PolicyRoleRedac, PolicyRessourceEnum.MovieBrandedData, PolicyActionEnum.Read, Effect.Allow],
-	[PolicyRoleRedac, PolicyRessourceEnum.MovieBrandedData, PolicyActionEnum.Update, Effect.Allow],
-	[PolicyRoleRedac, PolicyRessourceEnum.MovieBrandedData, PolicyActionEnum.Delete, Effect.Allow],
+	[PolicyTenant1, PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyTenant1, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Create, PolicyEft.Allow],
+	[PolicyTenant1, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyTenant1, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Update, PolicyEft.Allow],
+	[PolicyTenant1, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Delete, PolicyEft.Allow],
 
-	[PolicyRoleB2BMavens, PolicyRessourceEnum.Movie, PolicyActionEnum.Read, Effect.Allow],
-	[PolicyRoleB2BMavens, PolicyRessourceEnum.MovieLocalizedData, PolicyActionEnum.Create, Effect.Allow],
-	[PolicyRoleB2BMavens, PolicyRessourceEnum.MovieLocalizedData, PolicyActionEnum.Read, Effect.Allow],
-	[PolicyRoleB2BMavens, PolicyRessourceEnum.MovieLocalizedData, PolicyActionEnum.Update, Effect.Allow],
-	[PolicyRoleB2BMavens, PolicyRessourceEnum.MovieLocalizedData, PolicyActionEnum.Delete, Effect.Allow],
+	[PolicyTenant1, PolicyRoleB2BMavens, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyTenant1, PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Create, PolicyEft.Allow],
+	[PolicyTenant1, PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyTenant1, PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Update, PolicyEft.Allow],
+	[PolicyTenant1, PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Delete, PolicyEft.Allow],
 
 	// user
-	[PolicyUserAlice, PolicyRessourceEnum.Movie, PolicyActionEnum.Delete, Effect.Allow],
+	[PolicyTenant1, PolicyUserAlice, PolicyObj.Movie, PolicyAct.Delete, PolicyEft.Allow],
+	[PolicyTenant1, PolicyUserAlice, PolicyObj.MovieBrandedData, PolicyAct.Delete, PolicyEft.Deny],
+	[PolicyTenant1, PolicyUserJohn, PolicyObj.ConfigurationImport, PolicyAct.Execute, PolicyEft.Allow],
 
 	// group
-	[PolicyGroupB2BRidgefield, PolicyRessourceEnum.Movie, PolicyActionEnum.Update, Effect.Allow],
+	[PolicyTenant1, PolicyGroupB2BRidgefield, PolicyObj.Movie, PolicyAct.Update, PolicyEft.Allow],
+	[PolicyTenant1, PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Export, PolicyEft.Allow],
+	[PolicyTenant1, PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyTenant1, PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Create, PolicyEft.Allow],
+	[PolicyTenant1, PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Update, PolicyEft.Allow],
+	[PolicyTenant1, PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Delete, PolicyEft.Allow],
+
+	[PolicyTenant1, PolicyGroupRedacFR, PolicyObj.MovieBrandedData, PolicyAct.Update, PolicyEft.Deny],
+	[PolicyTenant1, PolicyGroupRedacTransverseFR, PolicyObj.Theater, PolicyAct.Delete, PolicyEft.Allow],
 ]
 
 export const ALL_GROUPING_POLICIES: GroupingPolicyTuple[] = [

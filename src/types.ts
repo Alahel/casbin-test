@@ -1,54 +1,58 @@
 import { Effect, type Enforcer } from "casbin"
 
-export type PolicySubject = string
+export type PolicySub = string
+
+export type PolicyDom = string
 
 export type Enforce = {
 	ef: Enforcer
-	sub: PolicySubject
-	obj: PolicyRessourceEnum
-	act: PolicyActionEnum
-	eft?: Effect
+	sub: PolicySub
+	dom: PolicyDom
+	obj: PolicyObj
+	act: PolicyAct
+	eft?: PolicyEft
 }
 
 export type Context = {
 	ef: Enforcer
 }
 
-export type PolicyTuple = [PolicySubject, PolicyRessourceEnum, PolicyActionEnum, Effect]
+export type PolicyTuple = [PolicyDom | "*", PolicySub, PolicyObj | "*", PolicyAct | "*", PolicyEft]
 
 // grouping of groups inside groups, or groups associated to roles, or users associated to roles
-export type GroupingPolicyTuple = [PolicySubject, PolicySubject]
+export type GroupingPolicyTuple = [PolicySub, PolicySub]
 
-export enum PolicyRessourceEnum {
-	Movie = "Movie",
-	MovieLocalizedData = "MovieLocalizedData",
-	MovieBrandedData = "MovieBrandedData",
-	Theater = "Theater",
+export enum PolicyDomain {
+	Tenant1 = "tenant1",
+	Tenant2 = "tenant2",
 }
 
-export enum PolicyActionEnum {
-	Create = "Create",
-	Read = "Read",
-	Update = "Update",
-	Delete = "Delete",
+export enum PolicyObj {
+	Movie = "movie",
+	MovieLocalizedData = "movie_localized_data",
+	MovieBrandedData = "movie_branded_data",
+	Theater = "theater",
+	ConfigurationImport = "configuration_import",
 }
 
-export enum PolicyEffectValueEnum {
+export enum PolicyAct {
+	Create = "create",
+	Read = "read",
+	Update = "update",
+	Delete = "delete",
+	Export = "export",
+	Execute = "execute",
+}
+
+export enum PolicyEft {
 	Allow = "allow",
 	Deny = "deny",
-	Indeterminate = "indeterminate",
 }
 
-export const EffectValueMapping = {
-	[Effect.Allow]: PolicyEffectValueEnum.Allow,
-	[Effect.Deny]: PolicyEffectValueEnum.Deny,
-	[Effect.Indeterminate]: PolicyEffectValueEnum.Indeterminate,
+export const PolicyEftValueMapping = {
+	[PolicyEft.Allow]: Effect.Allow,
+	[PolicyEft.Deny]: Effect.Deny,
 } as const
 
 // ---shape of basic policies---
-export const PolicyCRUD = [
-	PolicyActionEnum.Create,
-	PolicyActionEnum.Read,
-	PolicyActionEnum.Update,
-	PolicyActionEnum.Delete,
-] as const
+export const PolicyCRUD = [PolicyAct.Create, PolicyAct.Read, PolicyAct.Update, PolicyAct.Delete] as const
