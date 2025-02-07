@@ -87,7 +87,7 @@ const main = async () => {
 	console.log(`===>groups of user ${PolicyUserBob}`, await ef.getImplicitRolesForUser(PolicyUserBob))
 	console.log(`===>groups of user ${PolicyUserJohn}`, await ef.getImplicitRolesForUser(PolicyUserJohn))
 
-	const policyCheck = policyEnforceCheck(ef)
+	const policyCheck = policyEnforceCheck({ ef, log: true })
 
 	// root
 	// todo: make those wildcard policies work

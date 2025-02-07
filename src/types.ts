@@ -56,3 +56,12 @@ export const PolicyEftValueMapping = {
 
 // ---shape of basic policies---
 export const PolicyCRUD = [PolicyAct.Create, PolicyAct.Read, PolicyAct.Update, PolicyAct.Delete] as const
+
+// todo: use those restricted permissions per objects
+export const PolicyActPerObj = {
+	[PolicyObj.Movie]: PolicyCRUD,
+	[PolicyObj.MovieLocalizedData]: PolicyCRUD,
+	[PolicyObj.MovieBrandedData]: PolicyCRUD,
+	[PolicyObj.Theater]: [...PolicyCRUD, PolicyAct.Export],
+	[PolicyObj.ConfigurationImport]: [PolicyAct.Execute],
+} as const

@@ -1,23 +1,12 @@
-import { Effect } from "casbin"
 import {
 	type GroupingPolicyTuple,
 	PolicyAct,
-	PolicyCRUD,
 	type PolicyDom,
 	PolicyEft,
 	PolicyObj,
 	type PolicySub,
 	type PolicyTuple,
 } from "./types"
-
-// todo: use those restricted permissions per objects
-export const PolicyActPerObj = {
-	[PolicyObj.Movie]: PolicyCRUD,
-	[PolicyObj.MovieLocalizedData]: PolicyCRUD,
-	[PolicyObj.MovieBrandedData]: PolicyCRUD,
-	[PolicyObj.Theater]: [...PolicyCRUD, PolicyAct.Export],
-	[PolicyObj.ConfigurationImport]: [PolicyAct.Execute],
-} as const
 
 // ---tenants---
 export const PolicyTenant1: PolicyDom = "d:tenant1"
