@@ -1,8 +1,8 @@
 import { Effect, type Enforcer } from "casbin"
-import { type Enforce, PolicyEft, PolicyEftValueMapping } from "./types"
+import { type Enforce, PolicyEft } from "./types"
 
 const enforce = async ({ ef, sub, dom, obj, act, eft = PolicyEft.Allow, log }: Enforce & { log?: boolean }) => {
-	let ret = false // deny by default
+	let ret = false // denied by default
 
 	if (eft === PolicyEft.Allow) ret = await ef.enforce(dom, sub, obj, act)
 	else {

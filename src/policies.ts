@@ -30,8 +30,10 @@ export const PolicyGroupB2BAppdot: PolicySub = "g:b2b_appdot"
 
 export const ALL_POLICIES: PolicyTuple[] = [
 	[PolicyTenant1, PolicyUserRoot, "*", "*", PolicyEft.Allow],
-	// roles
+
+	// roles	
 	[PolicyTenant1, PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyTenant1, PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Delete, PolicyEft.Deny],
 	[PolicyTenant1, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Create, PolicyEft.Allow],
 	[PolicyTenant1, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Read, PolicyEft.Allow],
 	[PolicyTenant1, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Update, PolicyEft.Allow],
@@ -62,16 +64,16 @@ export const ALL_POLICIES: PolicyTuple[] = [
 
 export const ALL_GROUPING_POLICIES: GroupingPolicyTuple[] = [
 	// roles of groups
-	[PolicyGroupRedacFR, PolicyRoleRedac],
-	[PolicyGroupB2BRidgefield, PolicyRoleB2BMavens],
+	[PolicyGroupRedacFR, PolicyRoleRedac, PolicyTenant1],
+	[PolicyGroupB2BRidgefield, PolicyRoleB2BMavens, PolicyTenant1],
 
 	// users in groups
-	[PolicyUserAlice, PolicyGroupRedacFR],
-	[PolicyUserBob, PolicyGroupB2BRidgefield],
-	[PolicyUserJohn, PolicyGroupB2BAppdot],
+	[PolicyUserAlice, PolicyGroupRedacFR, PolicyTenant1],
+	[PolicyUserBob, PolicyGroupB2BRidgefield, PolicyTenant1],
+	[PolicyUserJohn, PolicyGroupB2BAppdot, PolicyTenant1],
 
 	// groups inheritance
-	[PolicyGroupB2BAppdot, PolicyGroupRedacFR],
-	[PolicyGroupRedacTransverseFR, PolicyGroupRedacFR],
-	[PolicyGroupRedacTransverseFR, PolicyGroupB2BRidgefield],
+	[PolicyGroupB2BAppdot, PolicyGroupRedacFR, PolicyTenant1],
+	[PolicyGroupRedacTransverseFR, PolicyGroupRedacFR, PolicyTenant1],
+	[PolicyGroupRedacTransverseFR, PolicyGroupB2BRidgefield, PolicyTenant1],
 ]

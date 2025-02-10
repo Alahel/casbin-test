@@ -20,7 +20,7 @@ export type Context = {
 export type PolicyTuple = [PolicyDom | "*", PolicySub, PolicyObj | "*", PolicyAct | "*", PolicyEft]
 
 // grouping of groups inside groups, or groups associated to roles, or users associated to roles
-export type GroupingPolicyTuple = [PolicySub, PolicySub]
+export type GroupingPolicyTuple = [PolicyDom | "*", PolicySub, PolicySub]
 
 export enum PolicyDomain {
 	Tenant1 = "tenant1",
@@ -48,11 +48,6 @@ export enum PolicyEft {
 	Allow = "allow",
 	Deny = "deny",
 }
-
-export const PolicyEftValueMapping = {
-	[PolicyEft.Allow]: Effect.Allow,
-	[PolicyEft.Deny]: Effect.Deny,
-} as const
 
 // ---shape of basic policies---
 export const PolicyCRUD = [PolicyAct.Create, PolicyAct.Read, PolicyAct.Update, PolicyAct.Delete] as const

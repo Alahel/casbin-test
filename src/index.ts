@@ -68,24 +68,33 @@ const main = async () => {
 	const { ef } = await mainFromDB()
 
 	console.log("===>groups policies", await ef.getGroupingPolicy())
-	console.log(`===>all roles of group ${PolicyGroupRedacFR}`, await ef.getImplicitRolesForUser(PolicyGroupRedacFR))
-	console.log(`===>all roles of group ${PolicyGroupB2BAppdot}`, await ef.getImplicitRolesForUser(PolicyGroupB2BAppdot))
+	console.log(
+		`===>all roles of group ${PolicyGroupRedacFR}`,
+		await ef.getImplicitRolesForUser(PolicyGroupRedacFR, PolicyTenant1),
+	)
+	console.log(
+		`===>all roles of group ${PolicyGroupB2BAppdot}`,
+		await ef.getImplicitRolesForUser(PolicyGroupB2BAppdot, PolicyTenant1),
+	)
 	console.log(
 		`===>all roles of group ${PolicyGroupB2BRidgefield}`,
-		await ef.getImplicitRolesForUser(PolicyGroupB2BRidgefield),
+		await ef.getImplicitRolesForUser(PolicyGroupB2BRidgefield, PolicyTenant1),
 	)
 	console.log(
 		`===>all roles of group ${PolicyGroupRedacTransverseFR}`,
-		await ef.getImplicitRolesForUser(PolicyGroupRedacTransverseFR),
+		await ef.getImplicitRolesForUser(PolicyGroupRedacTransverseFR, PolicyTenant1),
 	)
 
 	console.log("\n")
-	console.log(`===>members of group ${PolicyGroupRedacFR}`, await ef.getImplicitUsersForRole(PolicyGroupRedacFR))
+	console.log(
+		`===>members of group ${PolicyGroupRedacFR}`,
+		await ef.getImplicitUsersForRole(PolicyGroupRedacFR, PolicyTenant1),
+	)
 
 	console.log("\n")
-	console.log(`===>groups of user ${PolicyUserAlice}`, await ef.getImplicitRolesForUser(PolicyUserAlice))
-	console.log(`===>groups of user ${PolicyUserBob}`, await ef.getImplicitRolesForUser(PolicyUserBob))
-	console.log(`===>groups of user ${PolicyUserJohn}`, await ef.getImplicitRolesForUser(PolicyUserJohn))
+	console.log(`===>groups of user ${PolicyUserAlice}`, await ef.getImplicitRolesForUser(PolicyUserAlice, PolicyTenant1))
+	console.log(`===>groups of user ${PolicyUserBob}`, await ef.getImplicitRolesForUser(PolicyUserBob, PolicyTenant1))
+	console.log(`===>groups of user ${PolicyUserJohn}`, await ef.getImplicitRolesForUser(PolicyUserJohn, PolicyTenant1))
 
 	const policyCheck = policyEnforceCheck({ ef, log: true })
 
@@ -151,6 +160,12 @@ const main = async () => {
 		dom: PolicyTenant1,
 		obj: PolicyObj.MovieLocalizedData,
 		act: PolicyAct.Update,
+	})
+	await policyCheck({
+		sub: PolicyUserAlice,
+		dom: PolicyTenant1,
+		obj: PolicyObj.MovieBrandedData,
+		act: PolicyAct.Delete,
 	})
 
 	// bob
