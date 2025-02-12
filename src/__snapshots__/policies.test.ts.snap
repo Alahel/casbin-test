@@ -1,0 +1,114 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`policies > groups of user u:alice 1`] = `
+[
+  "g:redac_fr",
+  "r:redac",
+]
+`;
+
+exports[`policies > groups of user u:bob 1`] = `
+[
+  "g:b2b_ridgefield",
+  "r:b2b_mavens",
+]
+`;
+
+exports[`policies > groups of user u:john 1`] = `
+[
+  "g:b2b_appdot",
+  "g:redac_fr",
+  "r:redac",
+]
+`;
+
+exports[`policies > groups of user u:root 1`] = `[]`;
+
+exports[`policies > list all group policies tuples for inheritance 1`] = `
+[
+  [
+    "g:redac_fr",
+    "r:redac",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "r:b2b_mavens",
+  ],
+  [
+    "u:alice",
+    "g:redac_fr",
+  ],
+  [
+    "u:bob",
+    "g:b2b_ridgefield",
+  ],
+  [
+    "u:john",
+    "g:b2b_appdot",
+  ],
+  [
+    "g:b2b_appdot",
+    "g:redac_fr",
+  ],
+  [
+    "g:redac_transverse_fr",
+    "g:redac_fr",
+  ],
+  [
+    "g:redac_transverse_fr",
+    "g:b2b_ridgefield",
+  ],
+]
+`;
+
+exports[`policies > members of group g:b2b_appdot 1`] = `
+[
+  "u:john",
+]
+`;
+
+exports[`policies > members of group g:b2b_ridgefield 1`] = `
+[
+  "u:bob",
+  "g:redac_transverse_fr",
+]
+`;
+
+exports[`policies > members of group g:redac_fr 1`] = `
+[
+  "u:alice",
+  "g:b2b_appdot",
+  "g:redac_transverse_fr",
+  "u:john",
+]
+`;
+
+exports[`policies > members of group g:redac_transverse_fr 1`] = `[]`;
+
+exports[`policies > roles/groups of group g:b2b_appdot 1`] = `
+[
+  "g:redac_fr",
+  "r:redac",
+]
+`;
+
+exports[`policies > roles/groups of group g:b2b_ridgefield 1`] = `
+[
+  "r:b2b_mavens",
+]
+`;
+
+exports[`policies > roles/groups of group g:redac_fr 1`] = `
+[
+  "r:redac",
+]
+`;
+
+exports[`policies > roles/groups of group g:redac_transverse_fr 1`] = `
+[
+  "g:redac_fr",
+  "g:b2b_ridgefield",
+  "r:redac",
+  "r:b2b_mavens",
+]
+`;

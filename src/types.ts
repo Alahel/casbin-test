@@ -1,31 +1,39 @@
-import { Effect, type Enforcer } from "casbin"
+import type { Enforcer } from "casbin"
+import type { Knex } from "knex"
 
 export type PolicySub = string
 
-export type PolicyDom = string
+// Policies with lower number have higher priority over inherited policies
+// here we assume we can store at most 1000 levels of inheritance between users (from 0 to 999)
+// and 1000 levels of inheritance between groups (from 1000 to 9999)
+// and 1000 levels of inheritance between roles
+export enum PolicyPri {
+	Role = 10000,
+	Group = 1000,
+	User = 0,
+}
 
 export type Enforce = {
 	ef: Enforcer
 	sub: PolicySub
-	dom: PolicyDom
 	obj: PolicyObj
 	act: PolicyAct
 	eft?: PolicyEft
+	log?: boolean
+	explicit?: boolean
 }
 
 export type Context = {
+	knex: Knex
 	ef: Enforcer
 }
 
-export type PolicyTuple = [PolicyDom | "*", PolicySub, PolicyObj | "*", PolicyAct | "*", PolicyEft]
+export type PolicyTuple = [PolicyPri, PolicySub, PolicyObj | "*", PolicyAct | "*", PolicyEft]
+export const PolicyEftRetrieveStartIndex = 1
+export const PolicyEftIndex = 4
 
 // grouping of groups inside groups, or groups associated to roles, or users associated to roles
-export type GroupingPolicyTuple = [PolicyDom | "*", PolicySub, PolicySub]
-
-export enum PolicyDomain {
-	Tenant1 = "tenant1",
-	Tenant2 = "tenant2",
-}
+export type GroupingPolicyTuple = [PolicySub, PolicySub]
 
 export enum PolicyObj {
 	Movie = "movie",

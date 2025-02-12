@@ -10,7 +10,9 @@
 		"code:lint-fix-unsafe": "npx @biomejs/biome check --write --unsafe --no-errors-on-unmatched .",
 		"code:prettify": "npx @biomejs/biome format --write --no-errors-on-unmatched .",
 		"code:check:types": "tsc -b",
-		"dev": "tsx watch src/index.ts "
+		"dev": "tsx watch src/index.ts ",
+		"test:watch": "vitest",
+		"test": "vitest run"
 	},
 	"license": "ISC",
 	"dependencies": {
@@ -23,6 +25,7 @@
 		"@biomejs/biome": "1.9.4",
 		"@types/node": "22.13.1",
 		"typescript": "5.7.3",
-		"tsx": "4.19.2"
+		"tsx": "4.19.2",
+		"vitest": "3.0.5"
 	}
 }
