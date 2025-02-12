@@ -1,8 +1,8 @@
 import { newEnforcer } from "casbin"
-import KnexAdapter from "casbin-knex-adapter"
+import { KnexAdapter } from "casbin-knex-adapter"
 import Knex from "knex"
-import { ALL_GROUPING_POLICIES, ALL_POLICIES } from "./policies"
-import type { Context } from "./types"
+import { ALL_GROUPING_POLICIES, ALL_POLICIES } from "./policies.js"
+import type { Context } from "./types.js"
 
 export const mainFromDB = async (): Promise<Context> => {
 	const knex = Knex({

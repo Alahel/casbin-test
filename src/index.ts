@@ -1,16 +1,4 @@
-import { mainFromDB } from "./bootstrap"
-import { policyEnforceCheck } from "./enforce"
-import {
-	PolicyGroupB2BAppdot,
-	PolicyGroupB2BRidgefield,
-	PolicyGroupRedacFR,
-	PolicyGroupRedacTransverseFR,
-	PolicyUserAlice,
-	PolicyUserBob,
-	PolicyUserJohn,
-	PolicyUserRoot,
-} from "./policies"
-import { PolicyAct, PolicyEft, PolicyObj } from "./types"
+import { mainFromDB } from "./bootstrap.js"
 
 const main = async () => {
 	console.log("----starting----")

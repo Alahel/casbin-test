@@ -1,5 +1,5 @@
 import type { Enforcer } from "casbin"
-import { type Enforce, PolicyEft, PolicyEftIndex, PolicyEftRetrieveStartIndex } from "./types"
+import { type Enforce, PolicyEft, PolicyEftIndex, PolicyEftRetrieveStartIndex } from "./types.js"
 
 const enforce = async ({ ef, sub, obj, act, eft = PolicyEft.Allow, log, explicit = false }: Enforce) => {
 	let ret = false // denied by default

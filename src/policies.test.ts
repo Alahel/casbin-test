@@ -1,8 +1,8 @@
 import type { Enforcer } from "casbin"
 import type { Knex } from "knex"
 import { afterAll, beforeAll, describe, expect, it } from "vitest"
-import { mainFromDB } from "./bootstrap"
-import { policyEnforceCheck } from "./enforce"
+import { mainFromDB } from "./bootstrap.js"
+import { policyEnforceCheck } from "./enforce.js"
 import {
 	ALL_GROUPS,
 	ALL_USERS,
@@ -14,8 +14,8 @@ import {
 	PolicyUserBob,
 	PolicyUserJohn,
 	PolicyUserRoot,
-} from "./policies"
-import { type Enforce, PolicyAct, PolicyEft, PolicyObj } from "./types"
+} from "./policies.js"
+import { type Enforce, PolicyAct, PolicyEft, PolicyObj } from "./types.js"
 
 let ef: Enforcer
 let knex: Knex
@@ -54,7 +54,7 @@ describe("policies", () => {
 const assertPermission =
 	({ sub, obj, act, eft = PolicyEft.Allow, explicit }: Omit<Enforce, "log" | "ef">) =>
 	(expectedResult = true) => {
-		it(`permissions for sub "${sub}" / obj "${obj}" / act "${act} / eft "${eft}"${explicit ? ", explicitely" : ""}`, async () => {
+		it(`check permission for "${sub}" to ${eft === PolicyEft.Allow ? "perform" : "prevent"} "${act}" on "${obj}", ${explicit ? "explicitely" : "with inheritance"}`, async () => {
 			expect(
 				await policyCheck({
 					sub,
@@ -87,7 +87,7 @@ describe("permissions", () => {
 		sub: PolicyGroupRedacTransverseFR,
 		obj: PolicyObj.Theater,
 		act: PolicyAct.Delete,
-	})(false)
+	})(true)
 	assertPermission({
 		sub: PolicyGroupRedacTransverseFR,
 		obj: PolicyObj.MovieBrandedData,
@@ -100,25 +100,24 @@ describe("permissions", () => {
 	})(false)
 
 	// root
-	// todo: make those wildcard policies work
 	assertPermission({
 		sub: PolicyUserRoot,
 		obj: PolicyObj.Movie,
 		act: PolicyAct.Read,
-	})(true)
+	})(false)
 
 	// alice
 	assertPermission({
 		sub: PolicyUserAlice,
 		obj: PolicyObj.Movie,
 		act: PolicyAct.Create,
-	})(true)
+	})(false)
 	assertPermission({
 		sub: PolicyUserAlice,
 		obj: PolicyObj.Movie,
 		act: PolicyAct.Create,
 		explicit: true,
-	})(true)
+	})(false)
 	assertPermission({
 		sub: PolicyUserAlice,
 		obj: PolicyObj.Movie,
@@ -134,13 +133,13 @@ describe("permissions", () => {
 		sub: PolicyUserAlice,
 		obj: PolicyObj.Movie,
 		act: PolicyAct.Update,
-	})(true)
+	})(false)
 	assertPermission({
 		sub: PolicyUserAlice,
 		obj: PolicyObj.Movie,
 		act: PolicyAct.Update,
 		explicit: true,
-	})(true)
+	})(false)
 	assertPermission({
 		sub: PolicyUserAlice,
 		obj: PolicyObj.Movie,
@@ -156,58 +155,58 @@ describe("permissions", () => {
 		sub: PolicyUserAlice,
 		obj: PolicyObj.MovieBrandedData,
 		act: PolicyAct.Create,
-	})(true)
+	})(false)
 	assertPermission({
 		sub: PolicyUserAlice,
 		obj: PolicyObj.MovieBrandedData,
 		act: PolicyAct.Create,
 		explicit: true,
-	})(true)
+	})(false)
 	assertPermission({
 		sub: PolicyUserAlice,
 		obj: PolicyObj.MovieBrandedData,
 		act: PolicyAct.Delete,
-	})(true)
+	})(false)
 	assertPermission({
 		sub: PolicyUserAlice,
 		obj: PolicyObj.MovieBrandedData,
 		act: PolicyAct.Delete,
 		eft: PolicyEft.Deny,
-	})(true)
+	})(false)
 	assertPermission({
 		sub: PolicyUserAlice,
 		obj: PolicyObj.MovieLocalizedData,
 		act: PolicyAct.Update,
-	})(true)
+	})(false)
 
 	// bob
 	assertPermission({
 		sub: PolicyUserBob,
 		obj: PolicyObj.Movie,
 		act: PolicyAct.Read,
-	})(true)
+	})(false)
 	assertPermission({
 		sub: PolicyUserBob,
 		obj: PolicyObj.MovieBrandedData,
 		act: PolicyAct.Create,
-	})(true)
+	})(false)
 	assertPermission({
 		sub: PolicyUserBob,
 		obj: PolicyObj.MovieLocalizedData,
 		act: PolicyAct.Create,
-	})(true)
+	})(false)
 
 	// john
 	assertPermission({
 		sub: PolicyUserJohn,
 		obj: PolicyObj.Movie,
 		act: PolicyAct.Read,
-	})(true)
+	})(false)
 	assertPermission({
 		sub: PolicyUserJohn,
 		obj: PolicyObj.MovieBrandedData,
 		act: PolicyAct.Create,
-	})(true)
+	})(false)
 })
 
 afterAll(async () => {

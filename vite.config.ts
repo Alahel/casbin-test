@@ -10,7 +10,7 @@ export default defineConfig({
 				singleThread: true,
 				useAtomics: true,
 			},
-		},		
+		},
 		isolate: true,
 		maxConcurrency: 1,
 		maxWorkers: 1,

@@ -6,7 +6,7 @@ import {
 	PolicyPri,
 	type PolicySub,
 	type PolicyTuple,
-} from "./types"
+} from "./types.js"
 
 // ---users---
 export const PolicyUserRoot: PolicySub = "u:root"
@@ -34,6 +34,7 @@ export const ALL_GROUPS = [
 ]
 
 export const ALL_POLICIES: PolicyTuple[] = [
+	// todo: make those wildcard policies work
 	[PolicyPri.Role, PolicyUserRoot, "*", "*", PolicyEft.Allow],
 
 	// roles
