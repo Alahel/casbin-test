@@ -28,9 +28,9 @@ export type Context = {
 	ef: Enforcer
 }
 
-export type PolicyTuple = [PolicyPri, PolicySub, PolicyObj | "*", PolicyAct | "*", PolicyEft]
-export const PolicyEftRetrieveStartIndex = 1
-export const PolicyEftIndex = 4
+export type PolicyTuple = [PolicySub, PolicyObj | "*", PolicyAct | "*", PolicyEft]
+export const PolicyEftRetrieveStartIndex = 0
+export const PolicyEftIndex = 3
 
 // grouping of groups inside groups, or groups associated to roles, or users associated to roles
 export type GroupingPolicyTuple = [PolicySub, PolicySub]

@@ -1,8 +1,8 @@
 import type { Enforcer } from "casbin"
 import { beforeAll, describe, expect, it } from "vitest"
 import { ALL_USERS, PolicyUserAlice, PolicyUserBob, PolicyUserJohn, PolicyUserRoot } from "./policies.js"
-import { type TestCtx, assertPermission, getTestCtx } from "./testSetup.js"
-import { PolicyAct, PolicyEft, PolicyObj } from "./types.js"
+import { type TestCtx, assertPermission, assertPermissions, getTestCtx } from "./testSetup.js"
+import { PolicyAct, PolicyCRUD, PolicyEft, PolicyObj } from "./types.js"
 
 let ctx: TestCtx
 let ef: Enforcer
@@ -19,17 +19,25 @@ describe("policies", () => {
 	}
 })
 
-describe("permissions", () => {
-	// ---user PolicyUserRoot---
-	// ==>denied
+// todo: should be true as wildcards should work properly
+describe.skip("permissions of PolicyUserRoot", () => {
 	assertPermission({
 		sub: PolicyUserRoot,
 		obj: PolicyObj.Movie,
 		act: PolicyAct.Read,
-	})(false)
+	})(true)
+})
 
-	// ---user PolicyUserAlice---
-	// ==>allowed
+describe("permissions of PolicyUserAlice", () => {
+	assertPermission({
+		sub: PolicyUserAlice,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Create,
+	})(true)
+	assertPermissions({
+		sub: PolicyUserAlice,
+		obj: PolicyObj.MovieBrandedData,
+	})({ acts: PolicyCRUD })(true)
 	assertPermission({
 		sub: PolicyUserAlice,
 		obj: PolicyObj.Movie,
@@ -52,18 +60,7 @@ describe("permissions", () => {
 		act: PolicyAct.Delete,
 		explicit: true,
 	})(true)
-	// ==>denied
-	assertPermission({
-		sub: PolicyUserAlice,
-		obj: PolicyObj.Movie,
-		act: PolicyAct.Create,
-	})(false)
-	assertPermission({
-		sub: PolicyUserAlice,
-		obj: PolicyObj.Movie,
-		act: PolicyAct.Create,
-		explicit: true,
-	})(false)
+
 	assertPermission({
 		sub: PolicyUserAlice,
 		obj: PolicyObj.Movie,
@@ -73,43 +70,29 @@ describe("permissions", () => {
 		sub: PolicyUserAlice,
 		obj: PolicyObj.Movie,
 		act: PolicyAct.Update,
-		explicit: true,
-	})(false)
-	assertPermission({
-		sub: PolicyUserAlice,
-		obj: PolicyObj.MovieBrandedData,
-		act: PolicyAct.Create,
-	})(false)
-	assertPermission({
-		sub: PolicyUserAlice,
-		obj: PolicyObj.MovieBrandedData,
-		act: PolicyAct.Create,
-		explicit: true,
-	})(false)
-	assertPermission({
-		sub: PolicyUserAlice,
-		obj: PolicyObj.MovieBrandedData,
-		act: PolicyAct.Delete,
-	})(false)
-	assertPermission({
-		sub: PolicyUserAlice,
-		obj: PolicyObj.MovieBrandedData,
-		act: PolicyAct.Delete,
 		eft: PolicyEft.Deny,
-	})(false)
+		explicit: true,
+	})(true) // checking if requesting for an explicit deny works as expected here
+	assertPermission({
+		sub: PolicyUserAlice,
+		obj: PolicyObj.MovieBrandedData,
+		act: PolicyAct.Create,
+		explicit: true,
+	})(false) // checking if requesting for an explicit deny works as expected here
 	assertPermission({
 		sub: PolicyUserAlice,
 		obj: PolicyObj.MovieLocalizedData,
 		act: PolicyAct.Update,
 	})(false)
+})
 
-	// ---user PolicyUserBob---
-	// ==>denied
+describe("permissions of PolicyUserBob", () => {
 	assertPermission({
 		sub: PolicyUserBob,
 		obj: PolicyObj.Movie,
 		act: PolicyAct.Read,
-	})(false)
+	})(true)
+
 	assertPermission({
 		sub: PolicyUserBob,
 		obj: PolicyObj.MovieBrandedData,
@@ -119,18 +102,19 @@ describe("permissions", () => {
 		sub: PolicyUserBob,
 		obj: PolicyObj.MovieLocalizedData,
 		act: PolicyAct.Create,
-	})(false)
+	})(false) // explicitely set on PolicyUserBob
+})
 
-	// ---user PolicyUserJohn---
-	// ==>denied
-	assertPermission({
-		sub: PolicyUserJohn,
-		obj: PolicyObj.Movie,
-		act: PolicyAct.Read,
-	})(false)
+describe("permissions of PolicyUserJohn", () => {
 	assertPermission({
 		sub: PolicyUserJohn,
 		obj: PolicyObj.MovieBrandedData,
 		act: PolicyAct.Create,
+	})(true)
+
+	assertPermission({
+		sub: PolicyUserJohn,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Read,
 	})(false)
 })

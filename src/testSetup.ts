@@ -12,7 +12,7 @@ beforeAll(async () => {
 	const init = await mainFromDB()
 	ef = init.ef
 	knex = init.knex
-	policyCheck = policyEnforceCheck({ ef })
+	policyCheck = policyEnforceCheck({ ef, log: false })
 })
 
 afterAll(async () => {
@@ -29,13 +29,14 @@ export const getTestCtx = async (): Promise<TestCtx> => ({ ef, knex, policyCheck
 export const assertPermission =
 	({ sub, obj, act, eft = PolicyEft.Allow, explicit }: Omit<Enforce, "log" | "ef">) =>
 	(expectedResult = true) => {
-		it(`check permission for "${sub}" to ${eft === PolicyEft.Allow ? "perform" : "prevent"} "${act}" on "${obj}", ${explicit ? "explicitely" : "with inheritance"}, expected to be "${expectedResult}"`, async () => {
+		it(`check expected permission "${expectedResult}" for "${sub}" to ${eft === PolicyEft.Allow ? "perform" : "prevent"} "${act}" on "${obj}", ${explicit ? "explicitely" : "with inheritance"}`, async () => {
 			expect(
 				await policyCheck({
 					sub,
 					obj,
 					act,
 					eft,
+					explicit,
 				}),
 			).toBe(expectedResult)
 		})

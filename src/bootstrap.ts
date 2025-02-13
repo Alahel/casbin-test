@@ -22,7 +22,7 @@ export const mainFromDB = async (): Promise<Context> => {
 	const adapter = await KnexAdapter.newAdapter(knex)
 
 	const ef = await newEnforcer("casbin/model.conf", adapter)
-	ef.enableLog(false)
+	ef.enableLog(false) // set to true to see casbin logs
 
 	await ef.clearPolicy()
 

@@ -1,12 +1,4 @@
-import {
-	type GroupingPolicyTuple,
-	PolicyAct,
-	PolicyEft,
-	PolicyObj,
-	PolicyPri,
-	type PolicySub,
-	type PolicyTuple,
-} from "./types.js"
+import { type GroupingPolicyTuple, PolicyAct, PolicyEft, PolicyObj, type PolicySub, type PolicyTuple } from "./types.js"
 
 // ---users---
 export const PolicyUserRoot: PolicySub = "u:root"
@@ -35,37 +27,43 @@ export const ALL_GROUPS = [
 
 export const ALL_POLICIES: PolicyTuple[] = [
 	// todo: make those wildcard policies just work for obj and act
-	[PolicyPri.Role, PolicyUserRoot, "*", "*", PolicyEft.Allow],
+	[PolicyUserRoot, "*", "*", PolicyEft.Allow],
 
 	// roles
-	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Create, PolicyEft.Allow],
-	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Create, PolicyEft.Allow],
-	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Read, PolicyEft.Allow],
-	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Update, PolicyEft.Allow],
-	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Delete, PolicyEft.Allow],
-	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Deny],
-	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Delete, PolicyEft.Deny],
+	[PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Create, PolicyEft.Allow],
+	[PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Create, PolicyEft.Allow],
+	[PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Update, PolicyEft.Allow],
+	[PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Delete, PolicyEft.Allow],
+	[PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Deny],
+	[PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Delete, PolicyEft.Deny],
 
-	[PolicyPri.Role, PolicyRoleB2BMavens, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Allow],
-	[PolicyPri.Role, PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Create, PolicyEft.Allow],
-	[PolicyPri.Role, PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Read, PolicyEft.Allow],
-	[PolicyPri.Role, PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Update, PolicyEft.Allow],
-	[PolicyPri.Role, PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Delete, PolicyEft.Allow],
+	[PolicyRoleB2BMavens, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Create, PolicyEft.Allow],
+	[PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Update, PolicyEft.Allow],
+	[PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Delete, PolicyEft.Allow],
 
-	// group
-	[PolicyPri.Group, PolicyGroupB2BRidgefield, PolicyObj.Movie, PolicyAct.Update, PolicyEft.Allow],
-	[PolicyPri.Group, PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Export, PolicyEft.Allow],
-	[PolicyPri.Group, PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Read, PolicyEft.Allow],
-	[PolicyPri.Group, PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Create, PolicyEft.Allow],
-	[PolicyPri.Group, PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Update, PolicyEft.Allow],
-	[PolicyPri.Group, PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Delete, PolicyEft.Allow],
+	// groups
+	[PolicyGroupB2BRidgefield, PolicyObj.Movie, PolicyAct.Update, PolicyEft.Allow],
+	[PolicyGroupB2BRidgefield, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Export, PolicyEft.Allow],
+	[PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Create, PolicyEft.Allow],
+	[PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Update, PolicyEft.Allow],
+	[PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Delete, PolicyEft.Allow],
 
-	[PolicyPri.Group, PolicyGroupRedacTransverseFR, PolicyObj.Theater, PolicyAct.Delete, PolicyEft.Allow],
+	[PolicyGroupRedacTransverseFR, PolicyObj.Theater, PolicyAct.Delete, PolicyEft.Allow],
+	[PolicyGroupRedacTransverseFR, PolicyObj.Theater, PolicyAct.Update, PolicyEft.Deny],
 
-	// user
-	[PolicyPri.User, PolicyUserAlice, PolicyObj.Movie, PolicyAct.Delete, PolicyEft.Allow],
-	[PolicyPri.User, PolicyUserAlice, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Allow],
-	[PolicyPri.User, PolicyUserJohn, PolicyObj.ConfigurationImport, PolicyAct.Execute, PolicyEft.Allow],
+	// users
+	[PolicyUserAlice, PolicyObj.Movie, PolicyAct.Delete, PolicyEft.Allow],
+	[PolicyUserAlice, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyUserAlice, PolicyObj.Movie, PolicyAct.Update, PolicyEft.Deny],
+
+	[PolicyUserBob, PolicyObj.MovieLocalizedData, PolicyAct.Create, PolicyEft.Deny],
+
+	[PolicyUserJohn, PolicyObj.ConfigurationImport, PolicyAct.Execute, PolicyEft.Allow],
 ]
 
 export const ALL_GROUPING_POLICIES: GroupingPolicyTuple[] = [

@@ -3,9 +3,7 @@ import { PolicyRoleB2BMavens, PolicyRoleRedac } from "./policies.js"
 import { assertPermission, assertPermissions } from "./testSetup.js"
 import { PolicyAct, PolicyCRUD, PolicyObj } from "./types.js"
 
-describe("permissions", () => {
-	// ---role PolicyRoleRedac---
-	// ==>allowed
+describe("permissions of PolicyRoleRedac", () => {
 	assertPermission({
 		sub: PolicyRoleRedac,
 		obj: PolicyObj.Movie,
@@ -15,7 +13,7 @@ describe("permissions", () => {
 		sub: PolicyRoleRedac,
 		obj: PolicyObj.MovieBrandedData,
 	})({ acts: PolicyCRUD })(true)
-	// ==>denied
+
 	assertPermission({
 		sub: PolicyRoleRedac,
 		obj: PolicyObj.Theater,
@@ -25,9 +23,9 @@ describe("permissions", () => {
 		sub: PolicyRoleRedac,
 		obj: PolicyObj.Movie,
 	})({ acts: [PolicyAct.Read, PolicyAct.Delete] })(false)
+})
 
-	// ---role PolicyRoleB2BMavens---
-	// ==>allowed
+describe("permissions of PolicyRoleB2BMavens", () => {
 	assertPermission({
 		sub: PolicyRoleB2BMavens,
 		obj: PolicyObj.Movie,
@@ -37,7 +35,7 @@ describe("permissions", () => {
 		sub: PolicyRoleB2BMavens,
 		obj: PolicyObj.MovieLocalizedData,
 	})({ acts: PolicyCRUD })(true)
-	// ==>denied
+
 	assertPermission({
 		sub: PolicyRoleB2BMavens,
 		obj: PolicyObj.MovieBrandedData,

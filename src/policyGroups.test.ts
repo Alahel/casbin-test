@@ -1,8 +1,8 @@
 import type { Enforcer } from "casbin"
 import { beforeAll, describe, expect, it } from "vitest"
 import { ALL_GROUPS, PolicyGroupB2BRidgefield, PolicyGroupRedacFR, PolicyGroupRedacTransverseFR } from "./policies.js"
-import { type TestCtx, assertPermission, getTestCtx } from "./testSetup.js"
-import { PolicyAct, PolicyEft, PolicyObj } from "./types.js"
+import { type TestCtx, assertPermission, assertPermissions, getTestCtx } from "./testSetup.js"
+import { PolicyAct, PolicyCRUD, PolicyEft, PolicyObj } from "./types.js"
 
 let ctx: TestCtx
 let ef: Enforcer
@@ -27,40 +27,79 @@ describe("policies", () => {
 	}
 })
 
-describe("permissions", () => {
-	// ---group PolicyGroupRedacFR---
-	// ==>denied
-	assertPermission({
-		sub: PolicyGroupRedacFR,
-		obj: PolicyObj.MovieBrandedData,
-		act: PolicyAct.Update,
-		eft: PolicyEft.Deny,
-	})(false)
-
-	// ---group PolicyGroupB2BRidgefield---
-	// ==>allowed
-	assertPermission({
+describe("permissions of PolicyGroupB2BRidgefield", () => {
+	assertPermissions({
 		sub: PolicyGroupB2BRidgefield,
 		obj: PolicyObj.Theater,
-		act: PolicyAct.Export,
+	})({ acts: [...PolicyCRUD, PolicyAct.Export] })(true)
+	assertPermission({
+		sub: PolicyGroupB2BRidgefield,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Update,
 	})(true)
+	assertPermission({
+		sub: PolicyGroupB2BRidgefield,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Read,
+	})(true) // inherited from PolicyRoleB2BMavens
+})
 
-	// ---group PolicyGroupRedacTransverseFR---
-	// ==>allowed
+describe("permissions of PolicyGroupRedacTransverseFR", () => {
 	assertPermission({
 		sub: PolicyGroupRedacTransverseFR,
 		obj: PolicyObj.Theater,
 		act: PolicyAct.Delete,
 	})(true)
-	// ==>denied
 	assertPermission({
 		sub: PolicyGroupRedacTransverseFR,
 		obj: PolicyObj.MovieBrandedData,
+		act: PolicyAct.Update,
+	})(true) // inherited from PolicyRoleRedac
+	assertPermission({
+		sub: PolicyGroupRedacTransverseFR,
+		obj: PolicyObj.Theater,
+		act: PolicyAct.Export,
+	})(true) // inherited from PolicyGroupB2BRidgefield
+	assertPermission({
+		sub: PolicyGroupRedacTransverseFR,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Read,
+	})(true) // denied from inherited PolicyRoleRedac, but allowed from inherited PolicyGroupB2BRidgefield
+
+	assertPermission({
+		sub: PolicyGroupRedacTransverseFR,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Delete,
+	})(false)
+	assertPermission({
+		sub: PolicyGroupRedacTransverseFR,
+		obj: PolicyObj.Theater,
 		act: PolicyAct.Update,
 	})(false)
 	assertPermission({
 		sub: PolicyGroupRedacTransverseFR,
 		obj: PolicyObj.Theater,
-		act: PolicyAct.Export,
+		act: PolicyAct.Update,
+		eft: PolicyEft.Deny,
+		explicit: true,
+	})(true)
+})
+
+describe("permissions of PolicyGroupRedacFR", () => {
+	assertPermission({
+		sub: PolicyGroupRedacFR,
+		obj: PolicyObj.MovieBrandedData,
+		act: PolicyAct.Update,
+	})(true)
+
+	assertPermission({
+		sub: PolicyGroupRedacFR,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Update,
+	})(false)
+	assertPermission({
+		sub: PolicyGroupRedacFR,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Delete,
 	})(false)
 })
