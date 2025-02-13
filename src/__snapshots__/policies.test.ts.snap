@@ -35,6 +35,18 @@ exports[`policies > list all group policies tuples for inheritance 1`] = `
     "r:b2b_mavens",
   ],
   [
+    "g:b2b_appdot",
+    "g:redac_fr",
+  ],
+  [
+    "g:redac_transverse_fr",
+    "g:redac_fr",
+  ],
+  [
+    "g:redac_transverse_fr",
+    "g:b2b_ridgefield",
+  ],
+  [
     "u:alice",
     "g:redac_fr",
   ],
@@ -45,18 +57,6 @@ exports[`policies > list all group policies tuples for inheritance 1`] = `
   [
     "u:john",
     "g:b2b_appdot",
-  ],
-  [
-    "g:b2b_appdot",
-    "g:redac_fr",
-  ],
-  [
-    "g:redac_transverse_fr",
-    "g:redac_fr",
-  ],
-  [
-    "g:redac_transverse_fr",
-    "g:b2b_ridgefield",
   ],
 ]
 `;
@@ -69,16 +69,16 @@ exports[`policies > members of group g:b2b_appdot 1`] = `
 
 exports[`policies > members of group g:b2b_ridgefield 1`] = `
 [
-  "u:bob",
   "g:redac_transverse_fr",
+  "u:bob",
 ]
 `;
 
 exports[`policies > members of group g:redac_fr 1`] = `
 [
-  "u:alice",
   "g:b2b_appdot",
   "g:redac_transverse_fr",
+  "u:alice",
   "u:john",
 ]
 `;

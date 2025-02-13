@@ -34,30 +34,23 @@ export const ALL_GROUPS = [
 ]
 
 export const ALL_POLICIES: PolicyTuple[] = [
-	// todo: make those wildcard policies work
+	// todo: make those wildcard policies just work for obj and act
 	[PolicyPri.Role, PolicyUserRoot, "*", "*", PolicyEft.Allow],
 
 	// roles
-	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Deny],
-	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Delete, PolicyEft.Deny],
 	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Create, PolicyEft.Allow],
 	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Create, PolicyEft.Allow],
 	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Read, PolicyEft.Allow],
 	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Update, PolicyEft.Allow],
 	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Delete, PolicyEft.Allow],
+	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Deny],
+	[PolicyPri.Role, PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Delete, PolicyEft.Deny],
 
 	[PolicyPri.Role, PolicyRoleB2BMavens, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Allow],
 	[PolicyPri.Role, PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Create, PolicyEft.Allow],
 	[PolicyPri.Role, PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Read, PolicyEft.Allow],
 	[PolicyPri.Role, PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Update, PolicyEft.Allow],
 	[PolicyPri.Role, PolicyRoleB2BMavens, PolicyObj.MovieLocalizedData, PolicyAct.Delete, PolicyEft.Allow],
-
-	// user
-	[PolicyPri.User, PolicyUserAlice, PolicyObj.Movie, PolicyAct.Delete, PolicyEft.Allow],
-	[PolicyPri.User, PolicyUserAlice, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Allow],
-	// [PolicyPri.User, PolicyUserAlice, PolicyObj.MovieBrandedData, PolicyAct.Delete, PolicyEft.Allow],
-
-	[PolicyPri.User, PolicyUserJohn, PolicyObj.ConfigurationImport, PolicyAct.Execute, PolicyEft.Allow],
 
 	// group
 	[PolicyPri.Group, PolicyGroupB2BRidgefield, PolicyObj.Movie, PolicyAct.Update, PolicyEft.Allow],
@@ -68,6 +61,11 @@ export const ALL_POLICIES: PolicyTuple[] = [
 	[PolicyPri.Group, PolicyGroupB2BRidgefield, PolicyObj.Theater, PolicyAct.Delete, PolicyEft.Allow],
 
 	[PolicyPri.Group, PolicyGroupRedacTransverseFR, PolicyObj.Theater, PolicyAct.Delete, PolicyEft.Allow],
+
+	// user
+	[PolicyPri.User, PolicyUserAlice, PolicyObj.Movie, PolicyAct.Delete, PolicyEft.Allow],
+	[PolicyPri.User, PolicyUserAlice, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Allow],
+	[PolicyPri.User, PolicyUserJohn, PolicyObj.ConfigurationImport, PolicyAct.Execute, PolicyEft.Allow],
 ]
 
 export const ALL_GROUPING_POLICIES: GroupingPolicyTuple[] = [
@@ -75,13 +73,13 @@ export const ALL_GROUPING_POLICIES: GroupingPolicyTuple[] = [
 	[PolicyGroupRedacFR, PolicyRoleRedac],
 	[PolicyGroupB2BRidgefield, PolicyRoleB2BMavens],
 
-	// users in groups
-	[PolicyUserAlice, PolicyGroupRedacFR],
-	[PolicyUserBob, PolicyGroupB2BRidgefield],
-	[PolicyUserJohn, PolicyGroupB2BAppdot],
-
 	// groups inheritance
 	[PolicyGroupB2BAppdot, PolicyGroupRedacFR],
 	[PolicyGroupRedacTransverseFR, PolicyGroupRedacFR],
 	[PolicyGroupRedacTransverseFR, PolicyGroupB2BRidgefield],
+
+	// users in groups
+	[PolicyUserAlice, PolicyGroupRedacFR],
+	[PolicyUserBob, PolicyGroupB2BRidgefield],
+	[PolicyUserJohn, PolicyGroupB2BAppdot],
 ]
