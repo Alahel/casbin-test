@@ -2,11 +2,12 @@ import { type GroupingPolicyTuple, PolicyAct, PolicyEft, PolicyObj, type PolicyS
 
 // ---users---
 export const PolicyUserRoot: PolicySub = "u:root"
+export const PolicyUserTheaterAdmin: PolicySub = "u:theater_admin"
 export const PolicyUserAlice: PolicySub = "u:alice"
 export const PolicyUserBob: PolicySub = "u:bob"
 export const PolicyUserJohn: PolicySub = "u:john"
 
-export const ALL_USERS = [PolicyUserRoot, PolicyUserAlice, PolicyUserBob, PolicyUserJohn]
+export const ALL_USERS = [PolicyUserRoot, PolicyUserTheaterAdmin, PolicyUserAlice, PolicyUserBob, PolicyUserJohn]
 
 // ---roles---
 export const PolicyRoleRedac: PolicySub = "r:redac"
@@ -18,17 +19,16 @@ export const PolicyGroupRedacFR: PolicySub = "g:redac_fr"
 export const PolicyGroupRedacTransverseFR: PolicySub = "g:redac_transverse_fr"
 export const PolicyGroupB2BRidgefield: PolicySub = "g:b2b_ridgefield"
 export const PolicyGroupB2BAppdot: PolicySub = "g:b2b_appdot"
+export const PolicyGroupAdminMovie: PolicySub = "g:admin_movie"
 export const ALL_GROUPS = [
 	PolicyGroupRedacFR,
 	PolicyGroupRedacTransverseFR,
 	PolicyGroupB2BRidgefield,
 	PolicyGroupB2BAppdot,
+	PolicyGroupAdminMovie,
 ]
 
 export const ALL_POLICIES: PolicyTuple[] = [
-	// todo: make those wildcard policies just work for obj and act
-	[PolicyUserRoot, "*", "*", PolicyEft.Allow],
-
 	// roles
 	[PolicyRoleRedac, PolicyObj.Movie, PolicyAct.Create, PolicyEft.Allow],
 	[PolicyRoleRedac, PolicyObj.MovieBrandedData, PolicyAct.Create, PolicyEft.Allow],
@@ -56,7 +56,15 @@ export const ALL_POLICIES: PolicyTuple[] = [
 	[PolicyGroupRedacTransverseFR, PolicyObj.Theater, PolicyAct.Delete, PolicyEft.Allow],
 	[PolicyGroupRedacTransverseFR, PolicyObj.Theater, PolicyAct.Update, PolicyEft.Deny],
 
+	[PolicyGroupAdminMovie, PolicyObj.Movie, "*", PolicyEft.Allow],
+	[PolicyGroupAdminMovie, PolicyObj.Theater, "*", PolicyEft.Deny],
+
 	// users
+	[PolicyUserRoot, "*", "*", PolicyEft.Allow],
+	[PolicyUserRoot, PolicyObj.Movie, "*", PolicyEft.Allow],
+
+	[PolicyUserTheaterAdmin, PolicyObj.Theater, "*", PolicyEft.Allow],
+
 	[PolicyUserAlice, PolicyObj.Movie, PolicyAct.Delete, PolicyEft.Allow],
 	[PolicyUserAlice, PolicyObj.Movie, PolicyAct.Read, PolicyEft.Allow],
 	[PolicyUserAlice, PolicyObj.Movie, PolicyAct.Update, PolicyEft.Deny],

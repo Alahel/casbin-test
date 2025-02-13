@@ -1,6 +1,12 @@
 import type { Enforcer } from "casbin"
 import { beforeAll, describe, expect, it } from "vitest"
-import { ALL_GROUPS, PolicyGroupB2BRidgefield, PolicyGroupRedacFR, PolicyGroupRedacTransverseFR } from "./policies.js"
+import {
+	ALL_GROUPS,
+	PolicyGroupAdminMovie,
+	PolicyGroupB2BRidgefield,
+	PolicyGroupRedacFR,
+	PolicyGroupRedacTransverseFR,
+} from "./policies.js"
 import { type TestCtx, assertPermission, assertPermissions, getTestCtx } from "./testSetup.js"
 import { PolicyAct, PolicyCRUD, PolicyEft, PolicyObj } from "./types.js"
 
@@ -18,6 +24,12 @@ describe("policies", () => {
 	for (const g of ALL_GROUPS) {
 		it(`roles/groups of group ${g}`, async () => {
 			expect(await ef.getImplicitRolesForUser(g)).toMatchSnapshot()
+		})
+		it(`implicit permissions of group ${g}`, async () => {
+			expect(await ef.getImplicitPermissionsForUser(g)).toMatchSnapshot()
+		})
+		it(`explicit permissions of group ${g}`, async () => {
+			expect(await ef.getPermissionsForUser(g)).toMatchSnapshot()
 		})
 	}
 	for (const g of ALL_GROUPS) {
@@ -102,4 +114,16 @@ describe("permissions of PolicyGroupRedacFR", () => {
 		obj: PolicyObj.Movie,
 		act: PolicyAct.Delete,
 	})(false)
+})
+
+describe("permissions of PolicyGroupAdminMovie", () => {
+	assertPermissions({
+		sub: PolicyGroupAdminMovie,
+		obj: PolicyObj.Movie,
+	})({ acts: [...PolicyCRUD, PolicyAct.Export] })(true)
+
+	assertPermissions({
+		sub: PolicyGroupAdminMovie,
+		obj: PolicyObj.Theater,
+	})({ acts: [...PolicyCRUD, PolicyAct.Export] })(false)
 })

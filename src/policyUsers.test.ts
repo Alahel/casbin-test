@@ -1,6 +1,13 @@
 import type { Enforcer } from "casbin"
 import { beforeAll, describe, expect, it } from "vitest"
-import { ALL_USERS, PolicyUserAlice, PolicyUserBob, PolicyUserJohn, PolicyUserRoot } from "./policies.js"
+import {
+	ALL_USERS,
+	PolicyUserAlice,
+	PolicyUserBob,
+	PolicyUserJohn,
+	PolicyUserRoot,
+	PolicyUserTheaterAdmin,
+} from "./policies.js"
 import { type TestCtx, assertPermission, assertPermissions, getTestCtx } from "./testSetup.js"
 import { PolicyAct, PolicyCRUD, PolicyEft, PolicyObj } from "./types.js"
 
@@ -16,16 +23,39 @@ describe("policies", () => {
 		it(`groups of user ${u}`, async () => {
 			expect(await ef.getImplicitRolesForUser(u)).toMatchSnapshot()
 		})
+		it(`implicit permissions of user ${u}`, async () => {
+			expect(await ef.getImplicitPermissionsForUser(u)).toMatchSnapshot()
+		})
+		it(`explicit permissions of user ${u}`, async () => {
+			expect(await ef.getPermissionsForUser(u)).toMatchSnapshot()
+		})
 	}
 })
 
-// todo: should be true as wildcards should work properly
-describe.skip("permissions of PolicyUserRoot", () => {
+describe("permissions of PolicyUserRoot", () => {
 	assertPermission({
 		sub: PolicyUserRoot,
 		obj: PolicyObj.Movie,
 		act: PolicyAct.Read,
 	})(true)
+	assertPermission({
+		sub: PolicyUserRoot,
+		obj: PolicyObj.Theater,
+		act: PolicyAct.Export,
+	})(true)
+})
+
+describe("permissions of PolicyUserTheaterAdmin", () => {
+	assertPermissions({
+		sub: PolicyUserTheaterAdmin,
+		obj: PolicyObj.Theater,
+	})({ acts: PolicyCRUD })(true)
+
+	assertPermission({
+		sub: PolicyUserTheaterAdmin,
+		obj: PolicyObj.Movie,
+		act: PolicyAct.Read,
+	})(false)
 })
 
 describe("permissions of PolicyUserAlice", () => {

@@ -1,5 +1,78 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`policies > explicit permissions of user u:alice 1`] = `
+[
+  [
+    "u:alice",
+    "movie",
+    "delete",
+    "allow",
+  ],
+  [
+    "u:alice",
+    "movie",
+    "read",
+    "allow",
+  ],
+  [
+    "u:alice",
+    "movie",
+    "update",
+    "deny",
+  ],
+]
+`;
+
+exports[`policies > explicit permissions of user u:bob 1`] = `
+[
+  [
+    "u:bob",
+    "movie_localized_data",
+    "create",
+    "deny",
+  ],
+]
+`;
+
+exports[`policies > explicit permissions of user u:john 1`] = `
+[
+  [
+    "u:john",
+    "configuration_import",
+    "execute",
+    "allow",
+  ],
+]
+`;
+
+exports[`policies > explicit permissions of user u:root 1`] = `
+[
+  [
+    "u:root",
+    "*",
+    "*",
+    "allow",
+  ],
+  [
+    "u:root",
+    "movie",
+    "*",
+    "allow",
+  ],
+]
+`;
+
+exports[`policies > explicit permissions of user u:theater_admin 1`] = `
+[
+  [
+    "u:theater_admin",
+    "theater",
+    "*",
+    "allow",
+  ],
+]
+`;
+
 exports[`policies > groups of user u:alice 1`] = `
 [
   "g:redac_fr",
@@ -23,3 +96,234 @@ exports[`policies > groups of user u:john 1`] = `
 `;
 
 exports[`policies > groups of user u:root 1`] = `[]`;
+
+exports[`policies > groups of user u:theater_admin 1`] = `[]`;
+
+exports[`policies > implicit permissions of user u:alice 1`] = `
+[
+  [
+    "u:alice",
+    "movie",
+    "delete",
+    "allow",
+  ],
+  [
+    "u:alice",
+    "movie",
+    "read",
+    "allow",
+  ],
+  [
+    "u:alice",
+    "movie",
+    "update",
+    "deny",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "create",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "create",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "read",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "update",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "delete",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "read",
+    "deny",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "delete",
+    "deny",
+  ],
+]
+`;
+
+exports[`policies > implicit permissions of user u:bob 1`] = `
+[
+  [
+    "u:bob",
+    "movie_localized_data",
+    "create",
+    "deny",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "movie",
+    "update",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "movie",
+    "read",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "export",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "create",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "read",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "update",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "delete",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie",
+    "read",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie_localized_data",
+    "create",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie_localized_data",
+    "read",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie_localized_data",
+    "update",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie_localized_data",
+    "delete",
+    "allow",
+  ],
+]
+`;
+
+exports[`policies > implicit permissions of user u:john 1`] = `
+[
+  [
+    "u:john",
+    "configuration_import",
+    "execute",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "create",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "create",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "read",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "update",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "delete",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "read",
+    "deny",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "delete",
+    "deny",
+  ],
+]
+`;
+
+exports[`policies > implicit permissions of user u:root 1`] = `
+[
+  [
+    "u:root",
+    "*",
+    "*",
+    "allow",
+  ],
+  [
+    "u:root",
+    "movie",
+    "*",
+    "allow",
+  ],
+]
+`;
+
+exports[`policies > implicit permissions of user u:theater_admin 1`] = `
+[
+  [
+    "u:theater_admin",
+    "theater",
+    "*",
+    "allow",
+  ],
+]
+`;
