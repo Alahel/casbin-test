@@ -3,16 +3,6 @@ import type { Knex } from "knex"
 
 export type PolicySub = string
 
-// Policies with lower number have higher priority over inherited policies
-// here we assume we can store at most 1000 levels of inheritance between users (from 0 to 999)
-// and 1000 levels of inheritance between groups (from 1000 to 9999)
-// and 1000 levels of inheritance between roles
-export enum PolicyPri {
-	Role = 10000,
-	Group = 1000,
-	User = 0,
-}
-
 export type Enforce = {
 	ef: Enforcer
 	sub: PolicySub
