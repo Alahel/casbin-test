@@ -32,10 +32,21 @@ Start the stack
 make up;
 ```
 
-Watch mode
+Watch mode to properly load permissions in db
 
 ```bash
 npm run dev
+```
+
+Running the tests
+
+```bash
+npm run test
+```
+And in watch mode
+
+```bash
+npm run test:watch
 ```
 
 # Linting/formatting

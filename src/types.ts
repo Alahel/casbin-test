@@ -1,31 +1,29 @@
-import { Effect, type Enforcer } from "casbin"
+import type { Enforcer } from "casbin"
+import type { Knex } from "knex"
 
 export type PolicySub = string
-
-export type PolicyDom = string
 
 export type Enforce = {
 	ef: Enforcer
 	sub: PolicySub
-	dom: PolicyDom
 	obj: PolicyObj
 	act: PolicyAct
 	eft?: PolicyEft
+	log?: boolean
+	explicit?: boolean
 }
 
 export type Context = {
+	knex: Knex
 	ef: Enforcer
 }
 
-export type PolicyTuple = [PolicyDom | "*", PolicySub, PolicyObj | "*", PolicyAct | "*", PolicyEft]
+export type PolicyTuple = [PolicySub, PolicyObj | "*", PolicyAct | "*", PolicyEft]
+export const PolicyEftRetrieveStartIndex = 0
+export const PolicyEftIndex = 3
 
 // grouping of groups inside groups, or groups associated to roles, or users associated to roles
 export type GroupingPolicyTuple = [PolicySub, PolicySub]
-
-export enum PolicyDomain {
-	Tenant1 = "tenant1",
-	Tenant2 = "tenant2",
-}
 
 export enum PolicyObj {
 	Movie = "movie",
@@ -48,11 +46,6 @@ export enum PolicyEft {
 	Allow = "allow",
 	Deny = "deny",
 }
-
-export const PolicyEftValueMapping = {
-	[PolicyEft.Allow]: Effect.Allow,
-	[PolicyEft.Deny]: Effect.Deny,
-} as const
 
 // ---shape of basic policies---
 export const PolicyCRUD = [PolicyAct.Create, PolicyAct.Read, PolicyAct.Update, PolicyAct.Delete] as const

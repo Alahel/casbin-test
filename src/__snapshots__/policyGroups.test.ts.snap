@@ -1,0 +1,498 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`policies > explicit permissions of group g:admin_movie 1`] = `
+[
+  [
+    "g:admin_movie",
+    "movie",
+    "*",
+    "allow",
+  ],
+  [
+    "g:admin_movie",
+    "theater",
+    "*",
+    "deny",
+  ],
+]
+`;
+
+exports[`policies > explicit permissions of group g:b2b_appdot 1`] = `[]`;
+
+exports[`policies > explicit permissions of group g:b2b_ridgefield 1`] = `
+[
+  [
+    "g:b2b_ridgefield",
+    "movie",
+    "update",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "movie",
+    "read",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "export",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "create",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "read",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "update",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "delete",
+    "allow",
+  ],
+]
+`;
+
+exports[`policies > explicit permissions of group g:redac_fr 1`] = `[]`;
+
+exports[`policies > explicit permissions of group g:redac_transverse_fr 1`] = `
+[
+  [
+    "g:redac_transverse_fr",
+    "theater",
+    "delete",
+    "allow",
+  ],
+  [
+    "g:redac_transverse_fr",
+    "theater",
+    "update",
+    "deny",
+  ],
+]
+`;
+
+exports[`policies > implicit permissions of group g:admin_movie 1`] = `
+[
+  [
+    "g:admin_movie",
+    "movie",
+    "*",
+    "allow",
+  ],
+  [
+    "g:admin_movie",
+    "theater",
+    "*",
+    "deny",
+  ],
+]
+`;
+
+exports[`policies > implicit permissions of group g:b2b_appdot 1`] = `
+[
+  [
+    "r:redac",
+    "movie",
+    "create",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "create",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "read",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "update",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "delete",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "read",
+    "deny",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "delete",
+    "deny",
+  ],
+]
+`;
+
+exports[`policies > implicit permissions of group g:b2b_ridgefield 1`] = `
+[
+  [
+    "g:b2b_ridgefield",
+    "movie",
+    "update",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "movie",
+    "read",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "export",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "create",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "read",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "update",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "delete",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie",
+    "read",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie_localized_data",
+    "create",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie_localized_data",
+    "read",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie_localized_data",
+    "update",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie_localized_data",
+    "delete",
+    "allow",
+  ],
+]
+`;
+
+exports[`policies > implicit permissions of group g:redac_fr 1`] = `
+[
+  [
+    "r:redac",
+    "movie",
+    "create",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "create",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "read",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "update",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "delete",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "read",
+    "deny",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "delete",
+    "deny",
+  ],
+]
+`;
+
+exports[`policies > implicit permissions of group g:redac_transverse_fr 1`] = `
+[
+  [
+    "g:redac_transverse_fr",
+    "theater",
+    "delete",
+    "allow",
+  ],
+  [
+    "g:redac_transverse_fr",
+    "theater",
+    "update",
+    "deny",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "movie",
+    "update",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "movie",
+    "read",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "export",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "create",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "read",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "update",
+    "allow",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "theater",
+    "delete",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "create",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "create",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "read",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "update",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie_branded_data",
+    "delete",
+    "allow",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "read",
+    "deny",
+  ],
+  [
+    "r:redac",
+    "movie",
+    "delete",
+    "deny",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie",
+    "read",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie_localized_data",
+    "create",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie_localized_data",
+    "read",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie_localized_data",
+    "update",
+    "allow",
+  ],
+  [
+    "r:b2b_mavens",
+    "movie_localized_data",
+    "delete",
+    "allow",
+  ],
+]
+`;
+
+exports[`policies > list all group policies tuples for inheritance 1`] = `
+[
+  [
+    "g:redac_fr",
+    "r:redac",
+  ],
+  [
+    "g:b2b_ridgefield",
+    "r:b2b_mavens",
+  ],
+  [
+    "g:b2b_appdot",
+    "g:redac_fr",
+  ],
+  [
+    "g:redac_transverse_fr",
+    "g:redac_fr",
+  ],
+  [
+    "g:redac_transverse_fr",
+    "g:b2b_ridgefield",
+  ],
+  [
+    "u:alice",
+    "g:redac_fr",
+  ],
+  [
+    "u:bob",
+    "g:b2b_ridgefield",
+  ],
+  [
+    "u:john",
+    "g:b2b_appdot",
+  ],
+]
+`;
+
+exports[`policies > members of group g:admin_movie 1`] = `[]`;
+
+exports[`policies > members of group g:b2b_appdot 1`] = `
+[
+  "u:john",
+]
+`;
+
+exports[`policies > members of group g:b2b_ridgefield 1`] = `
+[
+  "g:redac_transverse_fr",
+  "u:bob",
+]
+`;
+
+exports[`policies > members of group g:redac_fr 1`] = `
+[
+  "g:b2b_appdot",
+  "g:redac_transverse_fr",
+  "u:alice",
+  "u:john",
+]
+`;
+
+exports[`policies > members of group g:redac_transverse_fr 1`] = `[]`;
+
+exports[`policies > roles/groups of group g:admin_movie 1`] = `[]`;
+
+exports[`policies > roles/groups of group g:b2b_appdot 1`] = `
+[
+  "g:redac_fr",
+  "r:redac",
+]
+`;
+
+exports[`policies > roles/groups of group g:b2b_ridgefield 1`] = `
+[
+  "r:b2b_mavens",
+]
+`;
+
+exports[`policies > roles/groups of group g:redac_fr 1`] = `
+[
+  "r:redac",
+]
+`;
+
+exports[`policies > roles/groups of group g:redac_transverse_fr 1`] = `
+[
+  "g:redac_fr",
+  "g:b2b_ridgefield",
+  "r:redac",
+  "r:b2b_mavens",
+]
+`;

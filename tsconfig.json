@@ -1,11 +1,11 @@
 {
 	"compilerOptions": {
 		"rootDir": "src",
-		"moduleResolution": "NodeNext",
+		"moduleResolution": "nodenext",
 		"target": "ESNext",
 		"module": "NodeNext",
 		"outDir": "./dist",
-		"lib": ["ESNext"]
+		"lib": ["ESNext", "DOM"]
 	},
 	"exclude": ["node_modules", "dist"],
 	"include": ["src/**/*.ts"]
