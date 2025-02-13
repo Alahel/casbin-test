@@ -1,20 +1,7 @@
-import type { Enforcer } from "casbin"
-import { afterAll, beforeAll, describe, expect, it } from "vitest"
-import {
-	ALL_GROUPS,
-	ALL_USERS,
-	PolicyGroupB2BRidgefield,
-	PolicyGroupRedacFR,
-	PolicyGroupRedacTransverseFR,
-	PolicyRoleB2BMavens,
-	PolicyRoleRedac,
-	PolicyUserAlice,
-	PolicyUserBob,
-	PolicyUserJohn,
-	PolicyUserRoot,
-} from "./policies.js"
-import { type TestCtx, assertPermission, assertPermissions, getTestCtx } from "./testSetup.js"
-import { PolicyAct, PolicyCRUD, PolicyEft, PolicyObj } from "./types.js"
+import { describe } from "vitest"
+import { PolicyRoleB2BMavens, PolicyRoleRedac } from "./policies.js"
+import { assertPermission, assertPermissions } from "./testSetup.js"
+import { PolicyAct, PolicyCRUD, PolicyObj } from "./types.js"
 
 describe("permissions", () => {
 	// ---role PolicyRoleRedac---
