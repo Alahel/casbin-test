@@ -1,29 +1,5 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`policies > groups of user u:alice 1`] = `
-[
-  "g:redac_fr",
-  "r:redac",
-]
-`;
-
-exports[`policies > groups of user u:bob 1`] = `
-[
-  "g:b2b_ridgefield",
-  "r:b2b_mavens",
-]
-`;
-
-exports[`policies > groups of user u:john 1`] = `
-[
-  "g:b2b_appdot",
-  "g:redac_fr",
-  "r:redac",
-]
-`;
-
-exports[`policies > groups of user u:root 1`] = `[]`;
-
 exports[`policies > list all group policies tuples for inheritance 1`] = `
 [
   [
