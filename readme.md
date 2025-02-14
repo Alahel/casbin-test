@@ -2,7 +2,7 @@
 
 Validate that a set of [casbin rules](https://casbin.org/docs/overview/) can be saved in a PG database using a knex adapter.
 
-The [casbin model](https://casbin.org/docs/supported-models) should implement those requirements (a mix of RBAC, ABAC):
+The [casbin model](https://casbin.org/docs/supported-models) should implement those requirements (a mix of RBAC, ABAC, priority):
 
 - define a set of ressources
 - define a set of permissions (actions) available on those ressources
@@ -21,7 +21,7 @@ The [casbin model](https://casbin.org/docs/supported-models) should implement th
 # Setup
 
 ```bash
-make up; nmp i
+make up; npm i
 ```
 
 # Run the app
